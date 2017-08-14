@@ -1,0 +1,21 @@
+<?php
+
+namespace App;
+
+use App\Subcategory;
+use Illuminate\Database\Eloquent\Model;
+
+class Category extends Model
+{
+
+    protected $guarded = [];
+    
+    /**
+     * Get subcategories
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function subcategories()
+    {
+        return $this->hasMany(Subcategory::class);
+    }
+}
