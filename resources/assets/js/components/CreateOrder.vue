@@ -43,7 +43,6 @@
                   </div>
                   <footer class="card-footer">
                     <a class="card-footer-item" @click="saveOrder">Guardar</a>
-                    <a class="card-footer-item">Regresar</a>
                   </footer>
                 </div>
             </div>
@@ -148,7 +147,10 @@
               })
             },
             getCategories(){
-                axios.get('/categories').then(({data}) => this.categories = data)
+                axios.get('/categories').then(({data}) => {
+                  this.categories = data
+                  this.categories ? this.getSubcategories(this.categories[0].id, 0) : false
+                })
             },
             getSubcategories(id, index){
                 axios.get('/subcategories/findByCategory/' + id).then(({data}) => this.subcategories = data)

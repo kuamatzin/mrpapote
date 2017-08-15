@@ -12,7 +12,7 @@ class OrderController extends Controller
     public function index()
     {
         $date = Input::get('date');
-        return Order::where('created_at', '>=', Carbon::today()->format('Y-m-d'))->get();
+        return $date ? Order::whereRaw('date(created_at) = ?', [$date])->get() : Order::where('created_at', '>=', Carbon::today()->format('Y-m-d'))->get();
     }
 
     public function show(Order $order)

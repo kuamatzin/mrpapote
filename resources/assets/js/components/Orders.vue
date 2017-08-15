@@ -1,7 +1,6 @@
 <template>
 <div>
     <create-order v-show="new_order" @orderCreated="orderCreated" :active_order="active_order" :update="update"></create-order>
-
     <div id="orders" v-show="new_order == false">
         <section class="hero is-primary">
           <div class="hero-body">
@@ -17,8 +16,22 @@
         </section>
 
         <br><br>
-        <a class="button is-primary is-outlined" @click="newOrder">Nueva Orden</a>
-        <br><br>
+        <div class="columns">
+            <div class="column is-2">
+                <a class="button is-primary is-outlined" @click="newOrder">Nueva Orden</a>
+            </div>
+            <div class="column is-2">
+                <datepicker 
+                    :value="date" 
+                    placeholder="Selecciona Fecha" 
+                    language="es" 
+                    :inline="false" 
+                    @selected="getOrdersByDate" 
+                    :input-class="'input is-primary'">
+                </datepicker>
+            </div>
+        </div>                
+
         <table class="table animated bounceInUp">
             <thead>
                 <tr>
@@ -43,12 +56,13 @@
 
 <script>
 import moment from 'moment'
+import Datepicker from 'vuejs-datepicker'
 moment.locale('es');
 
 export default {
+    components: { Datepicker },
     computed: {
         total_orders(){
-            console.log("HEY")
             let total = 0
             for (var i = this.orders.length - 1; i >= 0; i--) {
                 total += this.orders[i].total
@@ -61,6 +75,7 @@ export default {
     },
     data() {
         return {
+            date: new Date(),
             orders: '',
             active_order: '',
             update: false,
@@ -84,6 +99,11 @@ export default {
             this.active_order = order
             this.update = true
             this.new_order = true
+        },
+        getOrdersByDate(date){
+            this.datepicker = false;
+            this.today = moment(date).format('dddd D MMMM YYYY')
+            axios.get('/orders?date=' + moment(date).format('YYYY-MM-DD')).then(({data}) => this.orders = data)
         }
     }
 }
