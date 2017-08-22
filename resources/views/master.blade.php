@@ -11,10 +11,18 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <!-- Styles -->
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+        <!-- Scripts -->
+        <script>
+            window.App = {!! json_encode([
+                'user' => Auth::user(),
+                'signedIn' => Auth::check()
+            ]) !!};
+        </script>
     </head>
     <body>
         @include('nav')
-        <div class="columns">
+        <div class="columns content-admin">
             <aside class="column is-2 aside hero is-fullheight is-hidden-mobile">
                 <div>
                     <div class="main">
@@ -39,14 +47,7 @@
             <div class="container">
                 <div class="has-text-centered">
                     <p>
-                        <strong>Bulma</strong> by <a href="http://jgthms.com">Jeremy Thomas</a>. The source code is licensed
-                        <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content
-                        is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC ANS 4.0</a>.
-                    </p>
-                    <p>
-                        <a class="icon" href="https://github.com/jgthms/bulma">
-                            <i class="fa fa-github"></i>
-                        </a>
+                        <strong>Mi Changarro</strong> by <a target="_blank" href="http://inovuz.com"> Inovuz</a>
                     </p>
                 </div>
             </div>

@@ -1,7 +1,9 @@
 <template>
     <div v-if="edit_subcategory == false" class="img_wrp">
         <div class="hover">
+            <!--
             <img src="https://cdn2.iconfinder.com/data/icons/flat-icons-19/128/Burger.png" @click="getProducts">
+            -->
             <i class="fa fa-pencil edit" aria-hidden="true" @click="edit_subcategory = true"></i>
             <p @click="getProducts">{{subcategory.name}}</p>
         </div>
@@ -9,7 +11,9 @@
 
     <!-- Edit subcategory -->
     <div v-else>
+        <!--
         <img src="https://cdn2.iconfinder.com/data/icons/flat-icons-19/128/Burger.png">
+        -->
         <div class="field">
           <div class="control">
             <input class="input" type="text" placeholder="Subcategoría" v-model="subcategory_name">

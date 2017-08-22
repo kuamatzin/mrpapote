@@ -32,24 +32,26 @@
             </div>
         </div>                
 
-        <table class="table animated bounceInUp">
-            <thead>
-                <tr>
-                    <th><abbr title="Position">Número</abbr></th>
-                    <th><abbr title="Played">Nombre</abbr></th>
-                    <th><abbr title="Drawn">Entregado</abbr></th>
-                    <th>Pagado</th>
-                    <th>Total</th>
-                    <th>Fecha</th>
-                    <th>Detalles</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr is="order-item" v-for="(order, index) in orders" :order="order" :index="index" @updateOrder="updateOrder"></tr>
-            </tbody>
-        </table>
+        <div class="card card-2">
+            <table class="table animated bounceInUp">
+                <thead>
+                    <tr>
+                        <th><abbr title="Position">Número</abbr></th>
+                        <th><abbr title="Played">Nombre</abbr></th>
+                        <th><abbr title="Drawn">Entregado</abbr></th>
+                        <th>Pagado</th>
+                        <th>Total</th>
+                        <th>Fecha</th>
+                        <th>Detalles</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr is="order-item" v-for="(order, index) in orders" :order="order" :index="index" @updateOrder="updateOrder"></tr>
+                </tbody>
+            </table>
 
-        <h2>Total: ${{total_orders}}</h2>
+            <h2>Total: ${{total_orders}}</h2>
+        </div>
     </div>
 </div>
 </template>

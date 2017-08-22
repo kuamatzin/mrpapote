@@ -15,6 +15,8 @@ class CreateSuppliesTable extends Migration
     {
         Schema::create('supplies', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('ingredient_id')->unsigned();
             $table->foreign('ingredient_id')->references('id')->on('ingredients')->onDelete('cascade');
             $table->integer('quatity');

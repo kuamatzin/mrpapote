@@ -1,7 +1,6 @@
 <?php
 
-use App\Order;
-use Carbon\Carbon;
+use App\User;
 
 Route::get('/', 'PageController@orders');
 Route::get('/admin', 'PageController@admin');
@@ -27,11 +26,18 @@ Route::put('/orders/updatePayed/{order}', 'OrderController@updatePayed');
 Route::put('/orders/updateDelivered/{order}', 'OrderController@updateDelivered');
 Route::resource('/orders', 'OrderController');
 
+//Stats
+Route::get('/stats/orders', 'StatsController@orders');
+
 Route::get('/test', function(){
-    $orders = Order::where('created_at', '>=', Carbon::today())->get();
-    dd($orders);
+    $user = User::existsWithEmail('kuamatzi2n@gmail.com')->first();
+    dd($user);
 });
+
+//Social Login
+Route::get('/redirect', 'SocialAuthController@redirect');
+Route::get('/callback', 'SocialAuthController@callback');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Auth::routes();

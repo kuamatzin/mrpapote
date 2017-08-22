@@ -1,139 +1,165 @@
 <template>
-    <div>
-        <nav class="breadcrumb" aria-label="breadcrumbs">
-          <ul>
+<div class="container" v-cloak>
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+        <ul>
             <li :class="{ 'is-active' : active_section == 1}" @click="active_section = 1"><a href="#">Menú</a></li>
             <li :class="{ 'is-active' : active_section == 2}" @click="active_section = 2"><a href="#">Ingredientes</a></li>
-          </ul>
-        </nav>
-        <div v-if="active_section == 1">
-            <section class="hero is-primary">
-              <div class="hero-body">
+        </ul>
+    </nav>
+    
+    <div v-if="active_section == 1">
+        <section class="hero is-primary">
+            <div class="hero-body">
                 <div class="container">
-                  <h1 class="title animated bounceInDown">
+                    <h1 class="title animated bounceInDown">
                     Menú
-                  </h1>
-                  <h3 class="subtitle animated bounceInRight">
+                    </h1>
+                    <h3 class="subtitle animated bounceInRight">
                     Administra tus categorías, subcategorías y productos en la siguiente sección
-                  </h3>
+                    </h3>
                 </div>
-              </div>
-            </section>
-            <div class="tabs is-boxed">
-              <ul>
-                <li v-for="(category, index) in categories" @click="getSubcategories(category.id, index)" :class="{ 'is-active': tab_index == index }">
-                  <a>
-                    <span>
-                    {{category.name}} 
-                    </span>
-                  </a>
-                </li>
-                <li>
-                    <a>
-                    <span>
-                        <a class="button is-primary" @click="addCategory">Agregar&nbsp;<i class="fa fa-plus-circle" aria-hidden="true"></i></a>
-                    </span>
-                  </a>
-                </li>
-              </ul>
             </div>
-            
-            <div v-if="subcategories.length <= 0 && addingSubcategory == false" style="width:100%" class="has-text-centered">
+        </section>
+        <div class="container card card-2">
+            <div class="tabs is-boxed">
+                <ul>
+                    <li v-for="(category, index) in categories" @click="getSubcategories(category.id, index)" :class="{ 'is-active': tab_index == index }">
+                        <a>
+                            <span>
+                                {{category.name}}
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a>
+                            <span @click="addCategory">
+                                Agregar&nbsp; Categoría &nbsp;<i class="fa fa-plus-circle" aria-hidden="true"></i>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!--
+            <div v-if="tab_index != 1000 && subcategories.length <= 0 && addingSubcategory == false" style="width:100%" class="has-text-centered" v-cloak>
                 <br>
                 <h3 class="has-text-centered">Aun no existen subcategorias</h3>
                 <button class="button is-large is-primary" @click="addingSubcategory = true">
-                    <i class="fa fa-plus-circle icon is-large" aria-hidden="true"></i>
+                <i class="fa fa-plus-circle icon is-large" aria-hidden="true"></i>
                 </button>
             </div>
-            <div class="columns animated bounceInRight" id="subcategories">
-                
+
+            -->
+
+            <div class="animated bounceInRight" id="subcategories">
                 <!-- List of subcategories -->
-                <div class="column has-text-centered" v-if="subcategories.length" v-for="(subcategory, index) in subcategories">
-
-                    <subcategory :subcategory="subcategory" :index="index" @subcategoryUpdated="subcategoryUpdated" @getProducts="getProducts"></subcategory>   
-
-
+                <div class="container">
+                    <div class="tabs">
+                      <ul>
+                        <li v-for="(subcategory, index) in subcategories" :class="{ 'is-active' : tab_subcategory == index}"><a style="margin-bottom: -3px" @click="getProducts(subcategory.id, index)">{{subcategory.name}}</a></li>
+                        <li>
+                            <a style="margin-bottom: -3px">
+                                Agregar Subcategoría
+                                &nbsp;
+                                <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                      </ul>
+                    </div>
                 </div>
 
+                <!--
+                <div class="column has-text-centered" v-if="subcategories.length" v-for="(subcategory, index) in subcategories">
+                    <subcategory :subcategory="subcategory" :index="index" @subcategoryUpdated="subcategoryUpdated" @getProducts="getProducts"></subcategory>
+                </div>
+                -->
                 <!-- Adding Subcategory -->
                 <div class="column has-text-centered animated bounceInRight" v-if="addingSubcategory">
-                    <img src="https://cdn2.iconfinder.com/data/icons/flat-icons-19/128/Burger.png">
+                    <!--
+                    <img class="img-circle" src="https://cdn2.iconfinder.com/data/icons/flat-icons-19/128/Burger.png">
+                    -->
                     <div class="field">
-                      <div class="control">
-                        <input class="input" type="text" placeholder="Subcategoría" v-model="subcategory_name">
-                      </div>
+                        <div class="control">
+                            <input class="input" type="text" placeholder="Subcategoría" v-model="subcategory_name">
+                        </div>
                     </div>
                     <div class="field is-grouped">
-                      <p class="control">
-                        <a class="button is-primary" @click="addSubcategory">Guardar</a>
-                      </p>
-                      <p class="control">
-                        <a class="button" @click="addingSubcategory = false">Cancelar</a>
-                      </p>
+                        <p class="control">
+                            <a class="button is-primary" @click="addSubcategory">Guardar</a>
+                        </p>
+                        <p class="control">
+                            <a class="button" @click="addingSubcategory = false">Cancelar</a>
+                        </p>
                     </div>
                 </div>
-
-
-
-                <!-- Button to add subcategory -->
+                <!-- Button to add subcategory 
                 <div class="column has-text-centered hero-body" v-if="subcategories.length">
                     <button class="button is-large is-primary" @click="addingSubcategory = true">
-                        <i class="fa fa-plus-circle icon is-large" aria-hidden="true"></i>
+                    <i class="fa fa-plus-circle icon is-large" aria-hidden="true"></i>
                     </button>
                 </div>
-            </div>  
-        
-            <table class="table animated bounceInRight" id="products">
-                <thead>
-                    <tr>
-                        <th>Producto</th>
-                        <th>Descripción</th>
-                        <th>Precio</th>
-                        <!--
-                        <th>Activo</th>
-                        -->
-                        <th>Ingredientes</th>
-                        <th>Editar</th>
-                        <th>Eliminar</th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                    <!-- Product Component -->
-                    <tr v-for="(product, index) in products" is="product" :original_data="product" :index="index" @productDeleted="productDeleted" @personalizeProduct="personalizeProduct"></tr>
-
-                    <!--  Add Product -->
-                    <tr is="add-product" @productAdded="productAdded" :subcategory_id="active_subcategory"></tr>
-
-                </tbody>
-            </table>
-
-            <add-category :activeModal="activeModal" @closeModal="closeModal" @newCategory="newCategory"></add-category> 
-
-            <personalize-product :activeModal="activeModalPersonalizeProduct" @closeModal="closeModal" :personalize_product="personalize_product" @getProductPersonalized="getProductPersonalized" :button="'Guardar ingredientes'"></personalize-product>
+                -->
+            </div>
+            
+            <!-- Products -->
+            <div class="products" v-if="subcategories.length">
+                <table class="table animated bounceInRight" id="products" v-if="active_subcategory != ''">
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Descripción</th>
+                            <th>Precio</th>
+                            <!--
+                            <th>Activo</th>
+                            -->
+                            <th>Ingredientes</th>
+                            <th>Editar</th>
+                            <th>Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(product, index) in products" is="product" :original_data="product" :index="index" @productDeleted="productDeleted" @personalizeProduct="personalizeProduct">
+                        </tr>
+                        <tr is="add-product" @productAdded="productAdded" :subcategory_id="active_subcategory">
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <add-category
+                :activeModal="activeModal"
+                @closeModal="closeModal"
+                @newCategory="newCategory">
+            </add-category>
+            <personalize-product
+                :activeModal="activeModalPersonalizeProduct"
+                @closeModal="closeModal"
+                :personalize_product="personalize_product"
+                @getProductPersonalized="getProductPersonalized"
+                :button="'Guardar ingredientes'">
+            </personalize-product>
         </div>
-
-        <!-- Ingredients -->
-        <div v-if="active_section == 2">
-            <section class="hero is-primary">
-              <div class="hero-body">
-                <div class="container">
-                  <h1 class="title animated bounceInDown">
-                    Ingredientes
-                  </h1>
-                  <h3 class="subtitle animated bounceInRight">
-                    Administra tus tus ingredientes en la siguiente sección
-                  </h3>
-                </div>
-              </div>
-            </section>
-
-            <ingredients></ingredients>
-        </div>
-
-        <flash></flash>
     </div>
+    <!-- Ingredients -->
+    <div v-if="active_section == 2">
+        <section class="hero is-primary">
+            <div class="hero-body">
+                <div class="container">
+                    <h1 class="title animated bounceInDown">
+                    Ingredientes
+                    </h1>
+                    <h3 class="subtitle animated bounceInRight">
+                    Administra tus tus ingredientes en la siguiente sección
+                    </h3>
+                </div>
+            </div>
+        </section>
+        <ingredients>
+        </ingredients>
+    </div>
+    <flash></flash>
+</div>
 </template>
+
 
 <script>
     export default {
@@ -149,12 +175,14 @@
                 categories: '',
                 subcategories: '',
                 products: 0,
-                tab_index: 0,
+                tab_index: 1000,
+                tab_subcategory: 1000,
                 activeModal: false,
                 activeModalPersonalizeProduct: false,
                 personalize_product: '',
                 active_category: '',
-                active_subcategory: ''
+                active_subcategory: '',
+                subcategory_name: ''
             }
         },
         methods: {
@@ -162,14 +190,17 @@
                 return axios.get('/categories').then(({data}) => this.categories = data)
             },
             getSubcategories(id, index){
+                this.active_subcategory = ''
                 this.active_category = id
                 this.products = ''
                 this.addingSubcategory = false
                 axios.get('/subcategories/findByCategory/' + id).then(({data}) => this.subcategories = data)
                 this.tab_index = index
+                this.getProducts(index+1, index)
                 this.resetAnimation('subcategories', 'bounceInRight')
             },
-            getProducts(id){
+            getProducts(id, subcategory_index){
+                this.tab_subcategory = subcategory_index
                 this.active_subcategory = id;
                 axios.get('/products/findBySubcategory/' + id).then(({data}) => {
                     this.products = data
@@ -181,6 +212,7 @@
             },  
             addSubcategory(){
                 axios.post('/subcategories', { category_id: this.active_category, name: this.subcategory_name }).then(data => {
+                    this.subcategory_name = ''
                     this.getSubcategories(this.active_category, this.tab_index)
                     this.addingSubcategory = false
                 });       
