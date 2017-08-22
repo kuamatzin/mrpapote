@@ -13,12 +13,14 @@ class SocialAccountService
      * @param  Laravel\Socialite\Contracts\User $providerUser 
      * @return App\User               
      */
-    private function createUser($providerUser)
+    private function createUser($providerUser, $account)
     {
-            return User::create([
+            $user = User::create([
                 'email' => $providerUser->getEmail(),
                 'name' => $providerUser->getName(),
             ]);
+
+            return $this->associateUsertoAccount($account, $user);
     }
 
     /**
@@ -40,16 +42,16 @@ class SocialAccountService
      * @param  Laravel\Socialite\Contracts\User $providerUser Socialite user
      * @return  App\User
      */
-    private function createSocialAccount($providerUser)
+    private function createSocialAccount($providerUser, $provider)
     {
         $account = new SocialAccount([
                 'provider_user_id' => $providerUser->getId(),
-                'provider' => 'facebook'
+                'provider' => $provider
             ]);
 
         //Check if email already has an account, if yes associate account, if not create user
         $user = User::existsWithEmail($providerUser->getEmail())->first();
-        return  $user ? $this->associateUsertoAccount($account, $user) : $this->createUser($providerUser);
+        return  $user ? $this->associateUsertoAccount($account, $user) : $this->createUser($providerUser, $account);
     }
 
     /**
@@ -64,7 +66,7 @@ class SocialAccountService
             ->whereProviderUserId($providerUser->getId())
             ->first();
 
-        return $account ? $account->user : (new self)->createSocialAccount($providerUser);
+        return $account ? $account->user : (new self)->createSocialAccount($providerUser, $provider);
     }
 
 }

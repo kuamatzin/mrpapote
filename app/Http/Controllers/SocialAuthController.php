@@ -16,12 +16,10 @@ class SocialAuthController extends Controller
      * @param  Laravel\Socialite\Contracts\User $providerUser 
      * @return  View
      */
-    private function processUser($providerUser)
+    private function processUser($providerUser, $provider)
     {
-        $user = SocialAccountService::createOrGetUser($providerUser, 'facebook');
-
+        $user = SocialAccountService::createOrGetUser($providerUser, $provider);
         Auth::login($user, true);
-
         return redirect('/');
     }
 
@@ -30,7 +28,7 @@ class SocialAuthController extends Controller
      */
     public function redirect()
     {
-        return Socialite::driver('facebook')->redirect();   
+        return Socialite::driver(Input::get('provider'))->redirect();   
     }   
 
     /**
@@ -38,6 +36,6 @@ class SocialAuthController extends Controller
      */
     public function callback()
     {
-        return Input::get('code') ? $this->processUser(Socialite::driver('facebook')->user()) : redirect('/');
+        return Input::get('code') ? $this->processUser(Socialite::driver(Input::get('provider'))->user(), Input::get('provider')) : redirect('/');
     }
 }

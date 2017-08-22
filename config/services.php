@@ -41,4 +41,10 @@ return [
         'redirect' => env('FACEBOOK_CALLBACK'),
     ],
 
+    'google' => [
+        'client_id' => '7270026181-ua2ts72n80naftjc5sefc4al3j2cshve.apps.googleusercontent.com',
+        'client_secret' => 'bt6SOi_T8z12tApNMPdOnqNc',
+        'redirect' => env('GOOGLE_CALLBACK'),
+    ],
+
 ];

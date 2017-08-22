@@ -54,12 +54,12 @@
                     </p>
                     </form>
                     <p class="control login">
-                      <a  href="/redirect">
+                      <a  href="/redirect?provider=facebook">
                           <button class="button is-info is-outlined is-large is-fullwidth"><i class="fa fa-facebook" aria-hidden="true"></i></button>
                       </a>
                     </p>
                     <p class="control login">
-                        <a href="">
+                        <a href="/redirect?provider=google">
                             <button class="button is-danger is-outlined is-large is-fullwidth"><i class="fa fa-google" aria-hidden="true"></i></button>
                         </a>              
                     </p>
