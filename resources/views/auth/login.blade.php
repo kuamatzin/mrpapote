@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Mi Changarro</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" type="text/css" href="/css/login.css">
   </head>
   <body>
+    <div id="app"></div>
     <div class="login-wrapper columns">
       <div class="column is-8 is-hidden-mobile hero-banner">
         <section class="hero is-fullheight is-dark">
@@ -32,50 +34,41 @@
           <div class="hero-body">
             <div class="container">
               <div class="columns">
-                <div class="column is-8 is-offset-2">
-                  <div class="login-form">
-                  <form class="form-horizontal" method="POST" action="{{ route('login') }}">
-                  {{ csrf_field() }}
-                    <p class="control has-icon has-icon-right">
-                      <input class="input email-input" type="email" name="email" placeholder="carlos@gmail.com" required autofocus value="{{ old('email') }}">
-                      <span class="icon user">
-                        <i class="fa fa-user"></i>
-                      </span>
-                    </p>
-                    <br>
-                    <p class="control has-icon has-icon-right">
-                      <input class="input password-input" type="password" name="password" placeholder="contraseña" required>
-                      <span class="icon user">
-                        <i class="fa fa-lock"></i>
-                      </span>
-                    </p>
-                    <p class="control login">
-                      <button type="submit" class="button is-success is-outlined is-large is-fullwidth">Iniciar Sesión</button>
-                    </p>
-                    </form>
-                    <p class="control login">
-                      <a  href="/redirect?provider=facebook">
-                          <button class="button is-info is-outlined is-large is-fullwidth"><i class="fa fa-facebook" aria-hidden="true"></i></button>
-                      </a>
-                    </p>
-                    <p class="control login">
-                        <a href="/redirect?provider=google">
-                            <button class="button is-danger is-outlined is-large is-fullwidth"><i class="fa fa-google" aria-hidden="true"></i></button>
-                        </a>              
-                    </p>
+                @if ($errors->any())
+                  <div  id="login" style="display: none; -webkit-animation-duration: .70s;">
+                    @include('auth.loginForm')
                   </div>
-                  <div class="section forgot-password">
-                    <p class="has-text-centered">
-                      <a href="#">Olvidé mi contraseña</a>
-                      <a href="#">¿Ayuda?</a>
-                    </p>
+                  <div id="register" style="-webkit-animation-duration: .65s;">
+                    @include('auth.registerForm')
                   </div>
-                </div>
+                @else
+                  <div  id="login" style="-webkit-animation-duration: .70s;">
+                    @include('auth.loginForm')
+                  </div>
+                  <div id="register" style="display: none; -webkit-animation-duration: .65s;">
+                    @include('auth.registerForm')
+                  </div>
+                @endif
               </div>
             </div>
           </div>
         </section>
       </div>
     </div>
+    <script src="{{ asset('js/app.js') }}"></script>
+    <script>
+      $('#register_button').click(function(event) {
+        $( "#login" ).animateCss('bounceOutLeft').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+          $('#login').hide();
+          $('#register').show().animateCss('bounceInRight');
+        });
+      });
+      $('#login_button').click(function(event) {
+        $( "#register" ).animateCss('bounceOutLeft').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+          $('#register').hide();
+          $('#login').show().animateCss('bounceInRight');
+        });
+      });
+    </script>
   </body>
 </html>

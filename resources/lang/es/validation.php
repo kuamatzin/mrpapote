@@ -118,7 +118,9 @@ return [
 
     'attributes' => [
         'price' => 'precio',
-        'name' => 'nombre'
+        'name' => 'nombre',
+        'email_register' => 'email',
+        'passwordregister' => 'password'
     ],
 
 ];

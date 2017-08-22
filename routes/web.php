@@ -39,5 +39,3 @@ Route::get('/redirect', 'SocialAuthController@redirect');
 Route::get('/callback', 'SocialAuthController@callback');
 
 Auth::routes();
-
-Auth::routes();
