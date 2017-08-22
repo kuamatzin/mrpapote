@@ -12,6 +12,11 @@
                 <strong>{{ $errors->first('name') }}</strong>
             </span>
         @endif
+        @if ($errors->has('register'))
+            <span class="help-block">
+                <strong>pendejo</strong>
+            </span>
+        @endif
       </p>
       <br>
       <p class="control has-icon has-icon-right">

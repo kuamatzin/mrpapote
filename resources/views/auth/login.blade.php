@@ -34,7 +34,7 @@
           <div class="hero-body">
             <div class="container">
               <div class="columns">
-                @if ($errors->any())
+                @if (old('name'))
                   <div  id="login" style="display: none; -webkit-animation-duration: .70s;">
                     @include('auth.loginForm')
                   </div>

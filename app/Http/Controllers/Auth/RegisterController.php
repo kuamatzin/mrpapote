@@ -51,6 +51,8 @@ class RegisterController extends Controller
             'name' => 'required|string|max:255',
             'email_register' => 'required|string|email|max:255|unique:users,email',
             'passwordregister' => 'required|string|min:6|confirmed',
+        ], [
+            'register' => 'We need to know your e-mail address!',
         ]);
     }
 
@@ -68,4 +70,6 @@ class RegisterController extends Controller
             'password' => bcrypt($data['passwordregister']),
         ]);
     }
+
+
 }
