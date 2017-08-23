@@ -7,6 +7,9 @@
         <span class="icon user">
           <i class="fa fa-user"></i>
         </span>
+        @if ($errors->has('email'))
+            <span class="help is-danger" v-if="errors.get('name')">{{ $errors->first('email') }}</span>
+        @endif
       </p>
       <br>
       <p class="control has-icon has-icon-right">
@@ -14,6 +17,9 @@
         <span class="icon user">
           <i class="fa fa-lock"></i>
         </span>
+        @if ($errors->has('password'))
+          <span class="help is-danger" v-if="errors.get('name')">{{ $errors->first('password') }}</span>
+        @endif
       </p>
       <p class="control login">
         <button type="submit" class="button is-success is-outlined is-large is-fullwidth">Iniciar Sesión</button>
@@ -32,7 +38,7 @@
   </div>
   <div class="section forgot-password">
     <p class="has-text-centered">
-      <a id="register_button">No tengo cuenta. <span style="color:#00D1B2">Registrarse</span></a>
+      <a id="register_button">No tengo cuenta. <span>Registrarse</span></a>
       <a href="#">Olvidé mi contraseña</a>
       <a href="#">¿Ayuda?</a>
     </p>

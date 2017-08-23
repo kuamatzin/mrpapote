@@ -56256,6 +56256,10 @@ exports.default = {
 //
 //
 //
+//
+//
+//
+//
 
 /***/ }),
 /* 160 */
@@ -56774,7 +56778,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "column is-5"
   }, [_c('div', {
-    staticClass: "card"
+    staticClass: "card card-2"
   }, [_c('header', {
     staticClass: "card-header"
   }, [_c('p', {
@@ -56788,7 +56792,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("Total: $" + _vm._s(_vm.total_price))]) : _vm._e()]), _vm._v(" "), _c('div', {
     staticClass: "card-content"
   }, [_c('div', {
-    staticClass: "content"
+    staticClass: "content",
+    staticStyle: {
+      "background-color": "white"
+    }
   }, [(_vm.order_products.length > 0) ? _c('div', [_c('table', {
     staticClass: "table"
   }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.order_products), function(order_product) {
@@ -56811,6 +56818,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._v("Guardar")])])])]), _vm._v(" "), _c('div', {
     staticClass: "column is-7"
+  }, [_c('div', {
+    staticClass: "card card-2",
+    staticStyle: {
+      "padding": "20px"
+    }
   }, [_c('div', {
     staticClass: "field"
   }, [_c('label', {
@@ -56837,8 +56849,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.name = $event.target.value
       }
     }
-  })])]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('h3', {
-    staticClass: "panel-heading"
+  })])])]), _vm._v(" "), _c('br'), _c('br'), _vm._v(" "), _c('div', {
+    staticClass: "card card-2"
+  }, [_c('h3', {
+    staticClass: "panel-heading",
+    staticStyle: {
+      "background-color": "#00D1B2",
+      "color": "white"
+    }
   }, [_vm._v("Menú")]), _vm._v(" "), _c('div', {
     staticClass: "tabs is-boxed"
   }, [_c('ul', _vm._l((_vm.categories), function(category, index) {
@@ -56853,21 +56871,27 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }, [_c('a', [_c('span', [_vm._v(_vm._s(category.name))])])])
   }))]), _vm._v(" "), _c('div', {
-    staticClass: "columns"
-  }, _vm._l((_vm.subcategories), function(subcategory) {
-    return _c('div', {
-      staticClass: "column has-text-centered",
+    staticClass: "tabs"
+  }, [_c('ul', _vm._l((_vm.subcategories), function(subcategory, index) {
+    return _c('li', {
+      class: {
+        'is-active': _vm.tab_subcategory == index
+      }
+    }, [_c('a', {
+      staticStyle: {
+        "margin-bottom": "-3px"
+      },
       on: {
         "click": function($event) {
-          _vm.getProducts(subcategory.id)
+          _vm.getProducts(subcategory.id, index)
         }
       }
-    }, [_c('img', {
-      attrs: {
-        "src": "https://cdn2.iconfinder.com/data/icons/flat-icons-19/128/Burger.png"
-      }
-    }), _vm._v(" "), _c('p', [_vm._v(_vm._s(subcategory.name))])])
-  })), _vm._v(" "), _c('table', {
+    }, [_vm._v(_vm._s(subcategory.name))])])
+  }))]), _vm._v(" "), _c('div', {
+    staticStyle: {
+      "padding": "20xp"
+    }
+  }, [_c('table', {
     staticClass: "table"
   }, [_vm._m(1), _vm._v(" "), _vm._l((_vm.products), function(product) {
     return _c('tbody', [_c('tr', [_c('td', [_vm._v(_vm._s(product.name))]), _vm._v(" "), _c('td', [_vm._v("$" + _vm._s(product.price))]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_c('a', {
@@ -56885,7 +56909,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         }
       }
     }, [_vm._v("Personalizar")])])])])
-  })], 2)])]), _vm._v(" "), _c('personalize-product', {
+  })], 2)])])])]), _vm._v(" "), _c('personalize-product', {
     attrs: {
       "activeModal": _vm.activeModal,
       "personalize_product": _vm.personalize_product,
@@ -56970,9 +56994,6 @@ var _vuejsDatepicker2 = _interopRequireDefault(_vuejsDatepicker);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-//
-//
-//
 //
 //
 //
@@ -57389,7 +57410,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "title animated bounceInDown"
   }, [_vm._v("\n                Órdenes\n              ")]), _vm._v(" "), _c('h3', {
     staticClass: "subtitle animated bounceInRight"
-  }, [_vm._v("\n                " + _vm._s(_vm.today) + "\n              ")])])])]), _vm._v(" "), _c('br'), _c('br'), _vm._v(" "), _c('div', {
+  }, [_vm._v("\n                " + _vm._s(_vm.today) + "\n              ")])])])]), _vm._v(" "), _c('div', {
+    staticClass: "card card-2",
+    staticStyle: {
+      "padding": "20px"
+    }
+  }, [_c('div', {
     staticClass: "columns"
   }, [_c('div', {
     staticClass: "column is-2"
@@ -57411,9 +57437,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "selected": _vm.getOrdersByDate
     }
-  })], 1)]), _vm._v(" "), _c('div', {
-    staticClass: "card card-2"
-  }, [_c('table', {
+  })], 1)]), _vm._v(" "), _c('table', {
     staticClass: "table animated bounceInUp"
   }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.orders), function(order, index) {
     return _c("order-item", {
@@ -58106,17 +58130,6 @@ Object.defineProperty(exports, "__esModule", {
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 exports.default = {
     mounted: function mounted() {
@@ -58129,18 +58142,20 @@ exports.default = {
     data: function data() {
         return {
             active_section: 1,
-            addingSubcategory: false,
             categories: '',
             subcategories: '',
             products: 0,
-            tab_index: 1000,
+            tab_category: 1000,
             tab_subcategory: 1000,
             activeModal: false,
             activeModalPersonalizeProduct: false,
             personalize_product: '',
             active_category: '',
             active_subcategory: '',
-            subcategory_name: ''
+            subcategory_name: '',
+            category_name: '',
+            add_subcategory: false,
+            add_category: false
         };
     },
 
@@ -58153,27 +58168,28 @@ exports.default = {
                 return _this2.categories = data;
             });
         },
-        getSubcategories: function getSubcategories(id, index) {
+        getSubcategories: function getSubcategories(category_id, index) {
             var _this3 = this;
 
             this.active_subcategory = '';
-            this.active_category = id;
+            this.active_category = category_id;
             this.products = '';
-            this.addingSubcategory = false;
-            axios.get('/subcategories/findByCategory/' + id).then(function (_ref2) {
+            this.add_subcategory = false;
+            axios.get('/subcategories/findByCategory/' + category_id).then(function (_ref2) {
                 var data = _ref2.data;
-                return _this3.subcategories = data;
+
+                _this3.subcategories = data;
+                _this3.subcategoríes.length ? _this3.getProducts(index + 1, 0) : 0;
             });
-            this.tab_index = index;
-            this.getProducts(index + 1, index);
+            this.tab_category = index;
             this.resetAnimation('subcategories', 'bounceInRight');
         },
-        getProducts: function getProducts(id, subcategory_index) {
+        getProducts: function getProducts(subcategory_id, subcategory_index) {
             var _this4 = this;
 
             this.tab_subcategory = subcategory_index;
-            this.active_subcategory = id;
-            axios.get('/products/findBySubcategory/' + id).then(function (_ref3) {
+            this.active_subcategory = subcategory_id;
+            axios.get('/products/findBySubcategory/' + subcategory_id).then(function (_ref3) {
                 var data = _ref3.data;
 
                 _this4.products = data;
@@ -58181,23 +58197,27 @@ exports.default = {
             });
         },
         addCategory: function addCategory() {
-            this.activeModal = true;
-        },
-        addSubcategory: function addSubcategory() {
             var _this5 = this;
 
+            axios.post('/categories', { name: this.category_name }).then(function (_ref4) {
+                var data = _ref4.data;
+
+                _this5.getCategories();
+                _this5.cancelAddCategory();
+            });
+        },
+        addSubcategory: function addSubcategory() {
+            var _this6 = this;
+
             axios.post('/subcategories', { category_id: this.active_category, name: this.subcategory_name }).then(function (data) {
-                _this5.subcategory_name = '';
-                _this5.getSubcategories(_this5.active_category, _this5.tab_index);
-                _this5.addingSubcategory = false;
+                _this6.subcategory_name = '';
+                _this6.getSubcategories(_this6.active_category, _this6.subcategories.length);
+                _this6.add_subcategory = false;
             });
         },
         closeModal: function closeModal() {
             this.activeModal = false;
             this.activeModalPersonalizeProduct = false;
-        },
-        newCategory: function newCategory() {
-            this.getCategories();
         },
         resetAnimation: function resetAnimation(div_id, animation) {
             $('#' + div_id).removeClass("animated " + animation);
@@ -58226,6 +58246,14 @@ exports.default = {
             axios.put('/products/' + product_id + '/ingredients', { ingredients: ingredients }).then(function (data) {
                 flash('Ingredientes actualizados', 'success');
             });
+        },
+        cancelAddSubcategory: function cancelAddSubcategory() {
+            this.add_subcategory = false;
+            this.subcategory_name = '';
+        },
+        cancelAddCategory: function cancelAddCategory() {
+            this.add_category = false;
+            this.category_name = '';
         }
     }
 };
@@ -58275,7 +58303,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('ul', [_vm._l((_vm.categories), function(category, index) {
     return _c('li', {
       class: {
-        'is-active': _vm.tab_index == index
+        'is-active': _vm.tab_category == index
       },
       on: {
         "click": function($event) {
@@ -58283,16 +58311,66 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         }
       }
     }, [_c('a', [_c('span', [_vm._v("\n                                " + _vm._s(category.name) + "\n                            ")])])])
-  }), _vm._v(" "), _c('li', [_c('a', [_c('span', {
+  }), _vm._v(" "), (_vm.add_category) ? _c('li', [_c('a', {
+    staticStyle: {
+      "margin-bottom": "-3px"
+    },
+    attrs: {
+      "a": ""
+    }
+  }, [_c('div', {
+    staticClass: "field"
+  }, [_c('div', {
+    staticClass: "control"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.category_name),
+      expression: "category_name"
+    }],
+    staticClass: "input",
+    attrs: {
+      "type": "text",
+      "placeholder": "Nombre",
+      "required": ""
+    },
+    domProps: {
+      "value": (_vm.category_name)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.category_name = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "field is-grouped is-pulled-right",
+    staticStyle: {
+      "padding-left": "10px"
+    }
+  }, [_c('button', {
+    staticClass: "button is-primary is-small",
     on: {
       "click": _vm.addCategory
+    }
+  }, [_vm._v("\n                                      Guardar\n                                    ")]), _vm._v(" "), _c('a', {
+    staticClass: "button is-small",
+    on: {
+      "click": _vm.cancelAddCategory
+    }
+  }, [_vm._v("\n                                      Cancelar\n                                    ")])])])]) : _vm._e(), _vm._v(" "), _c('li', [_c('a', [_c('span', {
+    on: {
+      "click": function($event) {
+        _vm.add_category = true
+      }
     }
   }, [_vm._v("\n                                Agregar  Categoría  "), _c('i', {
     staticClass: "fa fa-plus-circle",
     attrs: {
       "aria-hidden": "true"
     }
-  })])])])], 2)]), _vm._v(" "), _c('div', {
+  })])])])], 2)]), _vm._v(" "), (_vm.categories.length) ? _c('div', {
     staticClass: "animated bounceInRight",
     attrs: {
       "id": "subcategories"
@@ -58316,8 +58394,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         }
       }
     }, [_vm._v(_vm._s(subcategory.name))])])
-  }), _vm._v(" "), _vm._m(1)], 2)])]), _vm._v(" "), (_vm.addingSubcategory) ? _c('div', {
-    staticClass: "column has-text-centered animated bounceInRight"
+  }), _vm._v(" "), (_vm.add_subcategory) ? _c('li', [_c('a', {
+    staticStyle: {
+      "margin-bottom": "-3px"
+    },
+    attrs: {
+      "a": ""
+    }
   }, [_c('div', {
     staticClass: "field"
   }, [_c('div', {
@@ -58332,7 +58415,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "input",
     attrs: {
       "type": "text",
-      "placeholder": "Subcategoría"
+      "placeholder": "Nombre",
+      "required": ""
     },
     domProps: {
       "value": (_vm.subcategory_name)
@@ -58344,31 +58428,42 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }
   })])]), _vm._v(" "), _c('div', {
-    staticClass: "field is-grouped"
-  }, [_c('p', {
-    staticClass: "control"
-  }, [_c('a', {
-    staticClass: "button is-primary",
+    staticClass: "field is-grouped is-pulled-right",
+    staticStyle: {
+      "padding-left": "10px"
+    }
+  }, [_c('button', {
+    staticClass: "button is-primary is-small",
     on: {
       "click": _vm.addSubcategory
     }
-  }, [_vm._v("Guardar")])]), _vm._v(" "), _c('p', {
-    staticClass: "control"
-  }, [_c('a', {
-    staticClass: "button",
+  }, [_vm._v("\n                                      Guardar\n                                    ")]), _vm._v(" "), _c('a', {
+    staticClass: "button is-small",
+    on: {
+      "click": _vm.cancelAddSubcategory
+    }
+  }, [_vm._v("\n                                      Cancelar\n                                    ")])])])]) : _vm._e(), _vm._v(" "), _c('li', [(_vm.add_subcategory == false) ? _c('a', {
+    staticStyle: {
+      "margin-bottom": "-3px"
+    },
     on: {
       "click": function($event) {
-        _vm.addingSubcategory = false
+        _vm.add_subcategory = true
       }
     }
-  }, [_vm._v("Cancelar")])])])]) : _vm._e()]), _vm._v(" "), (_vm.subcategories.length) ? _c('div', {
+  }, [_vm._v("\n                                Agregar Subcategoría\n                                 \n                                "), _c('i', {
+    staticClass: "fa fa-plus-circle",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  })]) : _vm._e()])], 2)])])]) : _vm._e(), _vm._v(" "), (_vm.subcategories.length) ? _c('div', {
     staticClass: "products"
-  }, [(_vm.active_subcategory != '') ? _c('table', {
+  }, [_c('br'), _vm._v(" "), (_vm.active_subcategory != '') ? _c('table', {
     staticClass: "table animated bounceInRight",
     attrs: {
       "id": "products"
     }
-  }, [_vm._m(2), _vm._v(" "), _c('tbody', [_vm._l((_vm.products), function(product, index) {
+  }, [_vm._m(1), _vm._v(" "), _c('tbody', [_vm._l((_vm.products), function(product, index) {
     return _c("product", {
       tag: "tr",
       attrs: {
@@ -58388,15 +58483,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "productAdded": _vm.productAdded
     }
-  })], 2)]) : _vm._e()]) : _vm._e(), _vm._v(" "), _c('add-category', {
-    attrs: {
-      "activeModal": _vm.activeModal
-    },
-    on: {
-      "closeModal": _vm.closeModal,
-      "newCategory": _vm.newCategory
-    }
-  }), _vm._v(" "), _c('personalize-product', {
+  })], 2)]) : _vm._e()]) : _vm._e(), _vm._v(" "), _c('personalize-product', {
     attrs: {
       "activeModal": _vm.activeModalPersonalizeProduct,
       "personalize_product": _vm.personalize_product,
@@ -58406,7 +58493,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "closeModal": _vm.closeModal,
       "getProductPersonalized": _vm.getProductPersonalized
     }
-  })], 1)]) : _vm._e(), _vm._v(" "), (_vm.active_section == 2) ? _c('div', [_vm._m(3), _vm._v(" "), _c('ingredients')], 1) : _vm._e(), _vm._v(" "), _c('flash')], 1)
+  })], 1)]) : _vm._e(), _vm._v(" "), (_vm.active_section == 2) ? _c('div', [_vm._m(2), _vm._v(" "), _c('div', {
+    staticClass: "card card-2"
+  }, [_c('ingredients')], 1)]) : _vm._e(), _vm._v(" "), _c('flash')], 1)
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('section', {
     staticClass: "hero is-primary"
@@ -58419,17 +58508,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("\n                    Menú\n                    ")]), _vm._v(" "), _c('h3', {
     staticClass: "subtitle animated bounceInRight"
   }, [_vm._v("\n                    Administra tus categorías, subcategorías y productos en la siguiente sección\n                    ")])])])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('li', [_c('a', {
-    staticStyle: {
-      "margin-bottom": "-3px"
-    }
-  }, [_vm._v("\n                                Agregar Subcategoría\n                                 \n                                "), _c('i', {
-    staticClass: "fa fa-plus-circle",
-    attrs: {
-      "aria-hidden": "true"
-    }
-  })])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('thead', [_c('tr', [_c('th', [_vm._v("Producto")]), _vm._v(" "), _c('th', [_vm._v("Descripción")]), _vm._v(" "), _c('th', [_vm._v("Precio")]), _vm._v(" "), _c('th', [_vm._v("Ingredientes")]), _vm._v(" "), _c('th', [_vm._v("Editar")]), _vm._v(" "), _c('th', [_vm._v("Eliminar")])])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -60020,7 +60098,11 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('table', {
+  return _c('div', {
+    staticStyle: {
+      "padding": "15px"
+    }
+  }, [_c('table', {
     staticClass: "table animated bounceInRight"
   }, [_vm._m(0), _vm._v(" "), _c('tbody', [_vm._l((_vm.ingredients), function(ingredient, index) {
     return _c("ingredient-item", {

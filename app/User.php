@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Category;
+use App\Ingredient;
 use App\SocialAccount;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -29,10 +30,14 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-
     public function categories()
     {
         return $this->hasMany(Category::class);
+    }
+
+    public function ingredients()
+    {
+        return $this->hasMany(Ingredient::class);
     }
 
     public function socialAccounts()

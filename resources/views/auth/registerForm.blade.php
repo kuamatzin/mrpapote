@@ -8,14 +8,7 @@
           <i class="fa fa-user"></i>
         </span>
         @if ($errors->has('name'))
-            <span class="help-block">
-                <strong>{{ $errors->first('name') }}</strong>
-            </span>
-        @endif
-        @if ($errors->has('register'))
-            <span class="help-block">
-                <strong>pendejo</strong>
-            </span>
+            <span class="help is-danger" v-if="errors.get('name')">{{ $errors->first('name') }}</span>
         @endif
       </p>
       <br>
@@ -25,9 +18,7 @@
           <i class="fa fa-user"></i>
         </span>
         @if ($errors->has('email_register'))
-            <span class="help-block">
-                <strong>{{ $errors->first('email_register') }}</strong>
-            </span>
+            <span class="help is-danger" v-if="errors.get('name')">{{ $errors->first('email_register') }}</span>
         @endif
       </p>
       <br>
@@ -37,9 +28,7 @@
           <i class="fa fa-lock"></i>
         </span>
         @if ($errors->has('passwordregister'))
-            <span class="help-block">
-                <strong>{{ $errors->first('passwordregister') }}</strong>
-            </span>
+            <span class="help is-danger" v-if="errors.get('name')">{{ $errors->first('passwordregister') }}</span>
         @endif
       </p>
       <br>
@@ -66,7 +55,7 @@
   </div>
   <div class="section forgot-password">
     <p class="has-text-centered">
-      <a id="login_button">Ya tengo cuenta. <span style="color:#00D1B2">Iniciar Sesión</span></a>
+      <a id="login_button">Ya tengo cuenta. <span>Iniciar Sesión</span></a>
       <a href="#">Olvidé mi contraseña</a>
       <a href="#">¿Ayuda?</a>
     </p>

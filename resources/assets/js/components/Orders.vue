@@ -14,25 +14,22 @@
             </div>
           </div>
         </section>
-
-        <br><br>
-        <div class="columns">
-            <div class="column is-2">
-                <a class="button is-primary is-outlined" @click="newOrder">Nueva Orden</a>
-            </div>
-            <div class="column is-2">
-                <datepicker 
-                    :value="date" 
-                    placeholder="Selecciona Fecha" 
-                    language="es" 
-                    :inline="false" 
-                    @selected="getOrdersByDate" 
-                    :input-class="'input is-primary'">
-                </datepicker>
-            </div>
-        </div>                
-
-        <div class="card card-2">
+        <div class="card card-2" style="padding:20px">
+            <div class="columns">
+                <div class="column is-2">
+                    <a class="button is-primary is-outlined" @click="newOrder">Nueva Orden</a>
+                </div>
+                <div class="column is-2">
+                    <datepicker 
+                        :value="date" 
+                        placeholder="Selecciona Fecha" 
+                        language="es" 
+                        :inline="false" 
+                        @selected="getOrdersByDate" 
+                        :input-class="'input is-primary'">
+                    </datepicker>
+                </div>
+            </div>       
             <table class="table animated bounceInUp">
                 <thead>
                     <tr>

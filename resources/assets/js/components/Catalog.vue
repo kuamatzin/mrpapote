@@ -23,16 +23,33 @@
         <div class="container card card-2">
             <div class="tabs is-boxed">
                 <ul>
-                    <li v-for="(category, index) in categories" @click="getSubcategories(category.id, index)" :class="{ 'is-active': tab_index == index }">
+                    <li v-for="(category, index) in categories" @click="getSubcategories(category.id, index)" :class="{ 'is-active': tab_category == index }">
                         <a>
                             <span>
                                 {{category.name}}
                             </span>
                         </a>
                     </li>
+                    <li v-if="add_category">
+                            <a a style="margin-bottom: -3px">
+                                <div class="field">
+                                  <div class="control">
+                                    <input class="input" type="text" placeholder="Nombre" v-model="category_name" required>
+                                  </div>
+                                </div>
+                                <div class="field is-grouped is-pulled-right" style="padding-left:10px">
+                                    <button class="button is-primary is-small" @click="addCategory">
+                                      Guardar
+                                    </button>
+                                    <a class="button is-small"  @click="cancelAddCategory">
+                                      Cancelar
+                                    </a>
+                                </div>
+                            </a>
+                        </li>
                     <li>
                         <a>
-                            <span @click="addCategory">
+                            <span @click="add_category = true">
                                 Agregar&nbsp; Categoría &nbsp;<i class="fa fa-plus-circle" aria-hidden="true"></i>
                             </span>
                         </a>
@@ -40,25 +57,31 @@
                 </ul>
             </div>
 
-            <!--
-            <div v-if="tab_index != 1000 && subcategories.length <= 0 && addingSubcategory == false" style="width:100%" class="has-text-centered" v-cloak>
-                <br>
-                <h3 class="has-text-centered">Aun no existen subcategorias</h3>
-                <button class="button is-large is-primary" @click="addingSubcategory = true">
-                <i class="fa fa-plus-circle icon is-large" aria-hidden="true"></i>
-                </button>
-            </div>
-
-            -->
-
-            <div class="animated bounceInRight" id="subcategories">
+            <div class="animated bounceInRight" id="subcategories" v-if="categories.length">
                 <!-- List of subcategories -->
                 <div class="container">
                     <div class="tabs">
                       <ul>
                         <li v-for="(subcategory, index) in subcategories" :class="{ 'is-active' : tab_subcategory == index}"><a style="margin-bottom: -3px" @click="getProducts(subcategory.id, index)">{{subcategory.name}}</a></li>
+                        <li v-if="add_subcategory">
+                            <a a style="margin-bottom: -3px">
+                                <div class="field">
+                                  <div class="control">
+                                    <input class="input" type="text" placeholder="Nombre" v-model="subcategory_name" required>
+                                  </div>
+                                </div>
+                                <div class="field is-grouped is-pulled-right" style="padding-left:10px">
+                                    <button class="button is-primary is-small" @click="addSubcategory">
+                                      Guardar
+                                    </button>
+                                    <a class="button is-small"  @click="cancelAddSubcategory">
+                                      Cancelar
+                                    </a>
+                                </div>
+                            </a>
+                        </li>
                         <li>
-                            <a style="margin-bottom: -3px">
+                            <a style="margin-bottom: -3px" @click="add_subcategory = true" v-if="add_subcategory == false">
                                 Agregar Subcategoría
                                 &nbsp;
                                 <i class="fa fa-plus-circle" aria-hidden="true"></i>
@@ -67,42 +90,11 @@
                       </ul>
                     </div>
                 </div>
-
-                <!--
-                <div class="column has-text-centered" v-if="subcategories.length" v-for="(subcategory, index) in subcategories">
-                    <subcategory :subcategory="subcategory" :index="index" @subcategoryUpdated="subcategoryUpdated" @getProducts="getProducts"></subcategory>
-                </div>
-                -->
-                <!-- Adding Subcategory -->
-                <div class="column has-text-centered animated bounceInRight" v-if="addingSubcategory">
-                    <!--
-                    <img class="img-circle" src="https://cdn2.iconfinder.com/data/icons/flat-icons-19/128/Burger.png">
-                    -->
-                    <div class="field">
-                        <div class="control">
-                            <input class="input" type="text" placeholder="Subcategoría" v-model="subcategory_name">
-                        </div>
-                    </div>
-                    <div class="field is-grouped">
-                        <p class="control">
-                            <a class="button is-primary" @click="addSubcategory">Guardar</a>
-                        </p>
-                        <p class="control">
-                            <a class="button" @click="addingSubcategory = false">Cancelar</a>
-                        </p>
-                    </div>
-                </div>
-                <!-- Button to add subcategory 
-                <div class="column has-text-centered hero-body" v-if="subcategories.length">
-                    <button class="button is-large is-primary" @click="addingSubcategory = true">
-                    <i class="fa fa-plus-circle icon is-large" aria-hidden="true"></i>
-                    </button>
-                </div>
-                -->
             </div>
             
             <!-- Products -->
             <div class="products" v-if="subcategories.length">
+                <br>
                 <table class="table animated bounceInRight" id="products" v-if="active_subcategory != ''">
                     <thead>
                         <tr>
@@ -125,11 +117,6 @@
                     </tbody>
                 </table>
             </div>
-            <add-category
-                :activeModal="activeModal"
-                @closeModal="closeModal"
-                @newCategory="newCategory">
-            </add-category>
             <personalize-product
                 :activeModal="activeModalPersonalizeProduct"
                 @closeModal="closeModal"
@@ -153,8 +140,10 @@
                 </div>
             </div>
         </section>
-        <ingredients>
-        </ingredients>
+        <div class="card card-2">
+            <ingredients>
+            </ingredients>
+        </div>
     </div>
     <flash></flash>
 </div>
@@ -171,58 +160,62 @@
         data() {
             return {
                 active_section: 1,
-                addingSubcategory: false,
                 categories: '',
                 subcategories: '',
                 products: 0,
-                tab_index: 1000,
+                tab_category: 1000,
                 tab_subcategory: 1000,
                 activeModal: false,
                 activeModalPersonalizeProduct: false,
                 personalize_product: '',
                 active_category: '',
                 active_subcategory: '',
-                subcategory_name: ''
+                subcategory_name: '',
+                category_name: '',
+                add_subcategory: false,
+                add_category: false
             }
         },
         methods: {
             getCategories(){
                 return axios.get('/categories').then(({data}) => this.categories = data)
             },
-            getSubcategories(id, index){
+            getSubcategories(category_id, index){
                 this.active_subcategory = ''
-                this.active_category = id
+                this.active_category = category_id
                 this.products = ''
-                this.addingSubcategory = false
-                axios.get('/subcategories/findByCategory/' + id).then(({data}) => this.subcategories = data)
-                this.tab_index = index
-                this.getProducts(index+1, index)
+                this.add_subcategory = false
+                axios.get('/subcategories/findByCategory/' + category_id).then(({data}) => {
+                    this.subcategories = data
+                    this.subcategoríes.length ? this.getProducts(index+1, 0) : 0
+                })
+                this.tab_category = index
                 this.resetAnimation('subcategories', 'bounceInRight')
             },
-            getProducts(id, subcategory_index){
+            getProducts(subcategory_id, subcategory_index){
                 this.tab_subcategory = subcategory_index
-                this.active_subcategory = id;
-                axios.get('/products/findBySubcategory/' + id).then(({data}) => {
+                this.active_subcategory = subcategory_id;
+                axios.get('/products/findBySubcategory/' + subcategory_id).then(({data}) => {
                     this.products = data
                     this.products.length <= 0 ? this.resetAnimation('noProducts', 'pulse') : this.resetAnimation('products', 'bounceInRight')  
                 })
             },
             addCategory(){
-                this.activeModal = true
+                axios.post('/categories', { name: this.category_name }).then(({data}) => {
+                    this.getCategories()
+                    this.cancelAddCategory()
+                });
             },  
             addSubcategory(){
                 axios.post('/subcategories', { category_id: this.active_category, name: this.subcategory_name }).then(data => {
                     this.subcategory_name = ''
-                    this.getSubcategories(this.active_category, this.tab_index)
-                    this.addingSubcategory = false
+                    this.getSubcategories(this.active_category, this.subcategories.length)
+                    this.add_subcategory = false
                 });       
             },
             closeModal(){
                 this.activeModal = false
                 this.activeModalPersonalizeProduct = false
-            },
-            newCategory(){
-                this.getCategories()
             },
             resetAnimation(div_id, animation){
                 $('#' + div_id).removeClass("animated " + animation)
@@ -248,6 +241,14 @@
             updateProductIngredients(product_id, ingredients){
                 axios.put('/products/' + product_id + '/ingredients', { ingredients: ingredients }).then((data) => {
                     flash('Ingredientes actualizados', 'success')})
+            },
+            cancelAddSubcategory(){
+                this.add_subcategory = false
+                this.subcategory_name = ''
+            },
+            cancelAddCategory(){
+                this.add_category = false
+                this.category_name = ''
             }
         }
     }

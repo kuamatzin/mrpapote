@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Ingredient;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class IngredientsController extends Controller
 {
@@ -28,7 +29,7 @@ class IngredientsController extends Controller
             'name' => 'required|max:50'
         ]);
 
-        return Ingredient::create(['name' => $request->name]);
+        return Ingredient::create(['name' => $request->name, 'user_id' => Auth::id()]);
     }
 
     public function destroy(Ingredient $ingredient)

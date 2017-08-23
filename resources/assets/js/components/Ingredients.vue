@@ -1,5 +1,5 @@
 <template>
-<div>
+<div style="padding: 15px">
   <table class="table animated bounceInRight">
     <thead>
       <tr>

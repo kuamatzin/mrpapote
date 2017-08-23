@@ -16,7 +16,6 @@
           <div class="hero-body">
             <div class="container section">
               <div class="has-text-right">
-                <h1 class="title is-1">Iniciar Sesión</h1>
               </div>
             </div>
           </div>
@@ -28,7 +27,7 @@
         <section class="hero is-fullheight">
           <div class="hero-heading">
             <div class="section has-text-centered">
-              <img src="http://bulma.io/images/bulma-logo.png" alt="Bulma logo" width="150px">
+              <h1 style="font-size: 2.5em">Mi Changarro</h1>
             </div>
           </div>
           <div class="hero-body">

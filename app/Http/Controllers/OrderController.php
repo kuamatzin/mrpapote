@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Order;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 
 class OrderController extends Controller
@@ -24,7 +25,7 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $products = $request->order_products;
-        $order = Order::create(['name' => $request->name, 'total' => $request->total]);
+        $order = Order::create(['name' => $request->name, 'total' => $request->total, 'user_id' => Auth::id()]);
         $order->relateOrderProducts($products);
     }
 

@@ -2,7 +2,7 @@
     <div class="container">
         <div class="columns">
             <div class="column is-5">
-                <div class="card">
+                <div class="card card-2">
                   <header class="card-header">
                     <p class="card-header-title is-3">
                       Orden de {{name}}
@@ -10,7 +10,7 @@
                     <span class="tag is-primary is-large" style="margin-right: 20px; margin-top: 12px" v-if="total_price">Total: ${{total_price}}</span>
                   </header>
                   <div class="card-content">
-                    <div class="content">
+                    <div class="content" style="background-color:white">
                       <div v-if="order_products.length > 0">
                           <table class="table">
                               <thead>
@@ -48,57 +48,61 @@
             </div>
 
             <div class="column is-7">
-                <div class="field">
-                  <label class="label">Nombre</label>
-                  <div class="control">
-                    <input class="input" type="text" v-model="name">
+                <div class="card card-2" style="padding:20px">
+                  <div class="field">
+                    <label class="label">Nombre</label>
+                    <div class="control">
+                      <input class="input" type="text" v-model="name">
+                    </div>
                   </div>
                 </div>
-                <hr>
-                
-                <h3 class="panel-heading">Menú</h3>
+                <br><br>
+                <div class="card card-2">
+                  <h3 class="panel-heading" style="background-color: #00D1B2; color:white">Menú</h3>
 
-                <div class="tabs is-boxed">
-                  <ul>
-                    <li v-for="(category, index) in categories" @click="getSubcategories(category.id, index)" :class="{ 'is-active': tab_index == index }">
-                      <a>
-                        <span>{{category.name}}</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
+                  <div class="tabs is-boxed">
+                    <ul>
+                      <li v-for="(category, index) in categories" @click="getSubcategories(category.id, index)" :class="{ 'is-active': tab_index == index }">
+                        <a>
+                          <span>{{category.name}}</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
 
-                <div class="columns">
-                    <div class="column has-text-centered" v-for="subcategory in subcategories" @click="getProducts(subcategory.id)">
-                        <img src="https://cdn2.iconfinder.com/data/icons/flat-icons-19/128/Burger.png">
-                        <p>{{subcategory.name}}</p>
+                    <div class="tabs">
+                      <ul>
+                        <li v-for="(subcategory, index) in subcategories" :class="{ 'is-active' : tab_subcategory == index}"><a style="margin-bottom: -3px" @click="getProducts(subcategory.id, index)">{{subcategory.name}}</a></li>
+                      </ul>
                     </div>
-                </div>  
 
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Producto</th>
-                            <th>Precio</th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody v-for="product in products">
-                        <tr>
-                            <td>{{product.name}}</td>
-                            <td>${{product.price}}</td>
-                            <td></td>
-                            <td>
-                                <a class="button is-success is-outlined" @click="addProductToOrder(product, product.subcategory.category.name)">Agregar a orden</a>
-                            </td>
-                            <td>
-                                <a class="button is-info is-outlined" @click="personalizeProduct(product)">Personalizar</a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>        
+                  <div style="padding:20xp">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Producto</th>
+                                <th>Precio</th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody v-for="product in products">
+                            <tr>
+                                <td>{{product.name}}</td>
+                                <td>${{product.price}}</td>
+                                <td></td>
+                                <td>
+                                    <a class="button is-success is-outlined" @click="addProductToOrder(product, product.subcategory.category.name)">Agregar a orden</a>
+                                </td>
+                                <td>
+                                    <a class="button is-info is-outlined" @click="personalizeProduct(product)">Personalizar</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                  </div>
+                </div>        
             </div>
         </div>
 
