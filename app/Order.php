@@ -4,11 +4,17 @@ namespace App;
 
 use App\Creation;
 use App\Product;
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
     protected $guarded = [];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
     /**
      * Get creations
      * @return  \Illuminate\Database\Eloquent\Relations\MorphToMany

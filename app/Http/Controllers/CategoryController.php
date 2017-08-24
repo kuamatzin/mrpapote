@@ -23,7 +23,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return Category::all();
+        return Auth::user()->categories;
     }
 
     public function store(Request $request)

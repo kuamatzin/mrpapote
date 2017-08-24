@@ -10,7 +10,7 @@ class IngredientsController extends Controller
 {
     public function index()
     {
-        return Ingredient::all();
+        return Auth::user()->ingredients;
     }
 
     public function update(Ingredient $ingredient, Request $request)

@@ -4,6 +4,7 @@ namespace App;
 
 use App\Category;
 use App\Ingredient;
+use App\Order;
 use App\SocialAccount;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -29,6 +30,11 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 
     public function categories()
     {
