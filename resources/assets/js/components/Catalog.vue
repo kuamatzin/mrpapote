@@ -187,7 +187,8 @@
                 this.add_subcategory = false
                 axios.get('/subcategories/findByCategory/' + category_id).then(({data}) => {
                     this.subcategories = data
-                    this.subcategoríes.length ? this.getProducts(index+1, 0) : 0
+                    console.log(this.subcategories.length)
+                    this.subcategories.length ? this.getProducts(index+1, 0) : 0
                 })
                 this.tab_category = index
                 this.resetAnimation('subcategories', 'bounceInRight')

@@ -40,10 +40,11 @@
                         <th>Total</th>
                         <th>Fecha</th>
                         <th>Detalles</th>
+                        <th>Eliminar</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr is="order-item" v-for="(order, index) in orders" :order="order" :index="index" @updateOrder="updateOrder"></tr>
+                    <tr is="order-item" v-for="(order, index) in orders" :order="order" :index="index" @updateOrder="updateOrder" @orderDeleted="orderDeleted"></tr>
                 </tbody>
             </table>
 
@@ -103,6 +104,10 @@ export default {
             this.datepicker = false;
             this.today = moment(date).format('dddd D MMMM YYYY')
             axios.get('/orders?date=' + moment(date).format('YYYY-MM-DD')).then(({data}) => this.orders = data)
+        },
+        orderDeleted(index){
+            console.log(index)
+            this.orders.splice(index, 1)
         }
     }
 }

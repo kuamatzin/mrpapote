@@ -134,6 +134,7 @@
                 total_price: 0,
                 order_products: [],
                 tab_index: 999,
+                tab_subcategory: 999,
                 activeModal: false,
                 personalize_product: ''
             }
@@ -222,10 +223,8 @@
             },
             resetValues(){
                 this.name = ''
-                this.categories = '',
-                this.subcategories = ''
                 this.products = ''
-                this.total_price = ''
+                this.total_price = 0
                 this.order_products = []
                 this.tab_index = 999
             },

@@ -56017,6 +56017,7 @@ exports.default = {
             total_price: 0,
             order_products: [],
             tab_index: 999,
+            tab_subcategory: 999,
             activeModal: false,
             personalize_product: ''
         };
@@ -56137,9 +56138,8 @@ exports.default = {
         },
         resetValues: function resetValues() {
             this.name = '';
-            this.categories = '', this.subcategories = '';
             this.products = '';
-            this.total_price = '';
+            this.total_price = 0;
             this.order_products = [];
             this.tab_index = 999;
         },
@@ -57049,6 +57049,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
 
 _moment2.default.locale('es');
 
@@ -57108,6 +57109,10 @@ exports.default = {
                 var data = _ref2.data;
                 return _this2.orders = data;
             });
+        },
+        orderDeleted: function orderDeleted(index) {
+            console.log(index);
+            this.orders.splice(index, 1);
         }
     }
 };
@@ -57447,7 +57452,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "index": index
       },
       on: {
-        "updateOrder": _vm.updateOrder
+        "updateOrder": _vm.updateOrder,
+        "orderDeleted": _vm.orderDeleted
       }
     })
   }))]), _vm._v(" "), _c('h2', [_vm._v("Total: $" + _vm._s(_vm.total_orders))])])])], 1)
@@ -57464,7 +57470,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "title": "Drawn"
     }
-  }, [_vm._v("Entregado")])]), _vm._v(" "), _c('th', [_vm._v("Pagado")]), _vm._v(" "), _c('th', [_vm._v("Total")]), _vm._v(" "), _c('th', [_vm._v("Fecha")]), _vm._v(" "), _c('th', [_vm._v("Detalles")])])])
+  }, [_vm._v("Entregado")])]), _vm._v(" "), _c('th', [_vm._v("Pagado")]), _vm._v(" "), _c('th', [_vm._v("Total")]), _vm._v(" "), _c('th', [_vm._v("Fecha")]), _vm._v(" "), _c('th', [_vm._v("Detalles")]), _vm._v(" "), _c('th', [_vm._v("Eliminar")])])])
 }]}
 module.exports.render._withStripped = true
 if (false) {
@@ -57629,7 +57635,6 @@ exports.default = {
                 return ingredientItem.id == ingredient.id;
             });
             this.product_ingredients.splice(index, 1);
-            //this.product_ingredients = _.reject(this.product_ingredients, ingredient)
         },
         createProduct: function createProduct() {
             this.original_data.product_ingredients = this.product_ingredients;
@@ -57819,6 +57824,9 @@ _moment2.default.locale('es'); //
 //
 //
 //
+//
+//
+//
 
 exports.default = {
     props: ['order', 'index'],
@@ -57860,7 +57868,14 @@ exports.default = {
             });
         },
         updateOrder: function updateOrder(order) {
-            this.$emit('updateOrder', order);
+            this.$emit('updateOrder', this.order);
+        },
+        deleteOrder: function deleteOrder() {
+            var _this3 = this;
+
+            axios.delete('/orders/' + this.order.id).then(function (data) {
+                return _this3.$emit('orderDeleted', _this3.index);
+            });
         }
     }
 
@@ -57915,10 +57930,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "button is-primary",
     on: {
       "click": function($event) {
-        _vm.updateOrder(_vm.order)
+        _vm.updateOrder()
       }
     }
-  }, [_vm._v("Detalles")])])])
+  }, [_vm._v("Detalles")])]), _vm._v(" "), _c('td', [_c('a', {
+    staticClass: "button is-danger",
+    on: {
+      "click": _vm.deleteOrder
+    }
+  }, [_vm._v("Eliminar")])])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -58179,7 +58199,8 @@ exports.default = {
                 var data = _ref2.data;
 
                 _this3.subcategories = data;
-                _this3.subcategoríes.length ? _this3.getProducts(index + 1, 0) : 0;
+                console.log(_this3.subcategories.length);
+                _this3.subcategories.length ? _this3.getProducts(index + 1, 0) : 0;
             });
             this.tab_category = index;
             this.resetAnimation('subcategories', 'bounceInRight');

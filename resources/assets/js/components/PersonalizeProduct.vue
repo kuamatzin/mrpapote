@@ -90,7 +90,6 @@
             removeFromProductIngredients(ingredient){
                 let index = _.findIndex(this.product_ingredients, ingredientItem => { return ingredientItem.id == ingredient.id })
                 this.product_ingredients.splice(index, 1);
-                //this.product_ingredients = _.reject(this.product_ingredients, ingredient)
             },
             createProduct(){
                 this.original_data.product_ingredients = this.product_ingredients

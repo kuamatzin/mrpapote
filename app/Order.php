@@ -54,9 +54,7 @@ class Order extends Model
     public function relateOrderProducts($products, $update = false)
     {
         if ($update) {
-            $this->creations()->delete();
-            $this->creations()->detach();
-            $this->products()->detach();
+            $this->emptyOrder();
         }
         foreach ($products as $key => $product) {
             if ($product['personalizable']) {
@@ -85,5 +83,18 @@ class Order extends Model
     public function products()
     {
         return $this->morphedByMany(Product::class, 'orderable');
+    }
+
+    public function completeDelete()
+    {
+        $this->emptyOrder();
+        $this->delete();
+    }
+
+    public function emptyOrder()
+    {
+        $this->creations()->delete();
+        $this->creations()->detach();
+        $this->products()->detach();
     }
 }

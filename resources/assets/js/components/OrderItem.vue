@@ -17,7 +17,10 @@
         <td>${{order.total}}</td>
         <td>{{formatDate(order.created_at)}}</td>
         <td>
-            <a class="button is-primary" @click="updateOrder(order)">Detalles</a>
+            <a class="button is-primary" @click="updateOrder()">Detalles</a>
+        </td>
+        <td>
+            <a class="button is-danger" @click="deleteOrder">Eliminar</a>
         </td>
     </tr>
 </template>
@@ -56,7 +59,10 @@
                 });
             },
             updateOrder(order){
-                this.$emit('updateOrder', order)
+                this.$emit('updateOrder', this.order)
+            },
+            deleteOrder(){
+                axios.delete('/orders/' + this.order.id).then(data => this.$emit('orderDeleted', this.index))
             }
         }
 

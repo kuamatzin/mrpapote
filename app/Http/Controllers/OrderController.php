@@ -13,7 +13,7 @@ class OrderController extends Controller
     public function index()
     {
         $date = Input::get('date');
-        return $date ? Auth::user()->orders->whereRaw('date(created_at) = ?', [$date]) : Auth::user()->orders->where('created_at', '>=', Carbon::today()->format('Y-m-d'));
+        return $date ? Auth::user()->orders()->whereRaw('date(created_at) = ?', [$date])->get() : Auth::user()->orders->where('created_at', '>=', Carbon::today()->format('Y-m-d'));
     }
 
     public function show(Order $order)
@@ -46,5 +46,10 @@ class OrderController extends Controller
     {
         $order->delivered = !$request->delivered;
         $order->save();
+    }
+
+    public function destroy(Order $order)
+    {
+        $order->completeDelete();
     }
 }
