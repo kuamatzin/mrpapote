@@ -45,7 +45,6 @@ $.fn.extend({
 
 Vue.component('create-order', require('./components/CreateOrder.vue'));
 Vue.component('orders', require('./components/Orders.vue'));
-Vue.component('personalize-product', require('./components/PersonalizeProduct.vue'));
 Vue.component('order-item', require('./components/OrderItem.vue'));
 Vue.component('categories', require('./components/Catalog.vue'));
 Vue.component('add-category', require('./components/AddCategory.vue'));

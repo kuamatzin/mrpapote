@@ -50,7 +50,7 @@ class Product extends Model
     }
 
     /**
-     * Syn ingredients allowing duplicate ingredients in the same product
+     * Sync ingredients allowing duplicate ingredients in the same product
      * @param  array $ingredients 
      */
     public function syncIngredients($ingredients)

@@ -1,6 +1,6 @@
 <template>
     <tr>
-        <td>{{index+1}}</td>
+        <td>{{indx+1}}</td>
         <td style="color: #00d1b2">{{order.name}}</td>
         <td>
             <a class="button" :class="{ 'is-primary': order.delivered, 'is-loading': loading_delivered }" @click="updateDelivered">
@@ -36,7 +36,8 @@
                 update: false,
                 new_order: false,
                 loading_payed: false,
-                loading_delivered: false
+                loading_delivered: false,
+                indx: parseInt(this.index)
             }
         },
 
@@ -62,7 +63,7 @@
                 this.$emit('updateOrder', this.order)
             },
             deleteOrder(){
-                axios.delete('/orders/' + this.order.id).then(data => this.$emit('orderDeleted', this.index))
+                axios.delete('/orders/' + this.order.id).then(data => this.$emit('orderDeleted', this.indx))
             }
         }
 

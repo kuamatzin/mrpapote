@@ -106,15 +106,26 @@
             </div>
         </div>
 
-        <personalize-product :activeModal="activeModal" @closeModal="closeModal" :personalize_product="personalize_product" @getProductPersonalized="getProductPersonalized" :button="'Agregar a la orden'"></personalize-product>
+        <personalize-product 
+          :activeModal="activeModal" 
+          :id="personalize_product.id" 
+          :name="personalize_product.name" 
+          :ingredients="personalize_product.ingredients" 
+          :price="personalize_product.price" 
+          :button="'Agregar a la orden'" 
+          @getProductPersonalized="getProductPersonalized" 
+          @closeModal="closeModal">
+        </personalize-product>
 
     </div>
 </template>
 
 <script>
     import sweetalert from 'sweetalert'
+    import PersonalizeProduct from './PersonalizeProduct.vue'
 
     export default {
+        components: { PersonalizeProduct },
         props: ['active_order', 'update'],
         watch: {
           active_order(order){
@@ -194,12 +205,14 @@
                 this.total_price = sum == true ? this.total_price + price : this.total_price - price;
             },
             personalizeProduct(product){
-                this.activeModal = true
                 this.personalize_product = product
+                console.log(this.personalize_product)
+                this.activeModal = true
             },
-            getProductPersonalized(product){
-              this.order_products.push(product)
-              this.updatePrice(product.price)
+            getProductPersonalized(creation){
+              console.log(creation)
+              this.order_products.push(creation)
+              this.updatePrice(creation.price)
             },
             saveOrder(){
               if (this.order_products.length) {
@@ -218,7 +231,7 @@
             updateOrder(){
               axios.put('/orders/' + this.active_order.id, { name: this.name, total: this.total_price, order_products: this.order_products }).then(({data}) => {
                 this.resetValues()
-                this.$emit('orderCreated')
+                this.$emit('orderCreated', true)
               });
             },
             resetValues(){

@@ -4,7 +4,7 @@
           <div class="modal-background"></div>
           <div class="modal-card">
             <header class="modal-card-head">
-              <p class="modal-card-title">{{personalize_product.name}}</p>
+              <p class="modal-card-title">{{creation.name}}</p>
               <button class="delete" @click="closeModal"></button>
             </header>
             <section class="modal-card-body">
@@ -39,36 +39,46 @@
 
 <script>
     export default {
-        props: ['activeModal', 'personalize_product', 'button'],
+        props: ['activeModal', 'id', 'name', 'ingredients', 'price', 'button'],
         computed: {
            chunkedIngredients () {
-             return _.chunk(this.ingredients, Math.round(this.ingredients.length/3))
+             return _.chunk(this.all_ingredients, Math.round(this.all_ingredients.length/3))
            },
            chunkedProductIngredients () {
-             return _.chunk(this.product_ingredients, Math.round(this.product_ingredients.length/2))
+             return _.chunk(this.creation.ingredients, Math.round(this.creation.ingredients.length/2))
            }
         },
         watch: {
-            personalize_product(){
-                this.original_data = this.personalize_product
-                this.original_ingredients = this.personalize_product.ingredients
+            id(value){
+                this.creation.id = value
             },
-            /*
-            product_ingredients() {
-                this.$forceUpdate();
+            name(value){
+                this.creation.name = value + " personalizado"
             },
-            */
+            ingredients(value){
+                this.creation.ingredients = value
+            },
+            price(value){
+                this.creation.price = value
+            },
             activeModal() {
                 this.active = !this.active;
                 this.active ? this.getIngredients() : 0
+                this.creation.ingredients = this.ingredients
             }
         },
         data() {
             return {
-                original_data: '',
+                creation: {
+                    id: '',
+                    name: '',
+                    ingredients: [],
+                    personalizable: true,
+                    quantity: 1,
+                    price: 0
+                },
                 active: this.activeModal,
-                ingredients: '', 
-                product_ingredients: ''
+                all_ingredients: '',
             }
         },
         methods: {
@@ -76,27 +86,20 @@
                 this.$emit('closeModal');
             },
             getIngredients(){
-                this.getOriginalIngredients()
                 axios.get('/ingredients').then(({data}) => {
-                    this.ingredients = data
+                    this.all_ingredients = data
                 });
             },
-            getOriginalIngredients(){
-                axios.get('products/' + this.personalize_product.id + '/ingredients').then(({data}) => this.product_ingredients = data)
-            },
             addIngredient(ingredient){
-                this.product_ingredients.push(ingredient)
+                this.creation.ingredients.push(ingredient)
             },
             removeFromProductIngredients(ingredient){
-                let index = _.findIndex(this.product_ingredients, ingredientItem => { return ingredientItem.id == ingredient.id })
-                this.product_ingredients.splice(index, 1);
+                let index = _.findIndex(this.creation.ingredients, ingredientItem => { return ingredientItem.id == ingredient.id })
+                this.creation.ingredients.splice(index, 1);
             },
             createProduct(){
-                this.original_data.product_ingredients = this.product_ingredients
-                this.original_data.quantity = 1
-                this.original_data.personalizable = true
-                this.product_ingredients = []
-                this.$emit('getProductPersonalized', this.original_data)
+                this.$emit('getProductPersonalized', this.creation)
+                this.creation.ingredients = []
                 this.closeModal()
             }
         }

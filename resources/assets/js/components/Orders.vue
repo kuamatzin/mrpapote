@@ -47,7 +47,6 @@
                     <tr is="order-item" v-for="(order, index) in orders" :order="order" :index="index" @updateOrder="updateOrder" @orderDeleted="orderDeleted"></tr>
                 </tbody>
             </table>
-
             <h2>Total: ${{total_orders}}</h2>
         </div>
     </div>
@@ -80,15 +79,16 @@ export default {
             active_order: '',
             update: false,
             new_order: false,
-            today: moment().format('dddd D MMMM YYYY')
+            today: moment().format('dddd D MMMM YYYY'),
+            pickdate: new Date()
         }
     },
     methods: {
         getOrders(){
             axios.get('/orders').then(({data}) => this.orders = data)
         },
-        orderCreated(){
-            this.getOrders();
+        orderCreated(updated){
+            updated ? this.getOrdersByDate() : this.getOrders
             this.new_order = false
             this.update = false
         },
@@ -101,12 +101,13 @@ export default {
             this.new_order = true
         },
         getOrdersByDate(date){
+            date == null ? date = this.pickdate : this.pickdate = date
             this.datepicker = false;
             this.today = moment(date).format('dddd D MMMM YYYY')
+            console.log(date)
             axios.get('/orders?date=' + moment(date).format('YYYY-MM-DD')).then(({data}) => this.orders = data)
         },
         orderDeleted(index){
-            console.log(index)
             this.orders.splice(index, 1)
         }
     }

@@ -28,7 +28,7 @@ class SocialAuthController extends Controller
      */
     public function redirect()
     {
-        return Socialite::driver(Input::get('provider'))->redirect();   
+        return Socialite::driver(Input::get('provider'))->redirect();
     }   
 
     /**

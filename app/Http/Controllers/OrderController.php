@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Order;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
@@ -12,8 +11,7 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $date = Input::get('date');
-        return $date ? Auth::user()->orders()->whereRaw('date(created_at) = ?', [$date])->get() : Auth::user()->orders->where('created_at', '>=', Carbon::today()->format('Y-m-d'));
+        return Auth::user()->orders()->getByDate(Input::get('date'))->get();
     }
 
     public function show(Order $order)

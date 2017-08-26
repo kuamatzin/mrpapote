@@ -117,12 +117,16 @@
                     </tbody>
                 </table>
             </div>
-            <personalize-product
-                :activeModal="activeModalPersonalizeProduct"
-                @closeModal="closeModal"
-                :personalize_product="personalize_product"
-                @getProductPersonalized="getProductPersonalized"
-                :button="'Guardar ingredientes'">
+
+            <personalize-product 
+              :activeModal="activeModalPersonalizeProduct" 
+              :id="personalize_product.id" 
+              :name="personalize_product.name" 
+              :ingredients="personalize_product.ingredients" 
+              :price="personalize_product.price" 
+              :button="'Guardar ingredientes'" 
+              @getProductPersonalized="getProductPersonalized" 
+              @closeModal="closeModal">
             </personalize-product>
         </div>
     </div>
@@ -151,7 +155,11 @@
 
 
 <script>
+    import PersonalizeProduct from './PersonalizeProduct.vue'
+
     export default {
+        components: { PersonalizeProduct },
+        
         mounted() {
             this.getCategories().then(data => {
                 this.getSubcategories(data[0].id, 0)
@@ -187,7 +195,6 @@
                 this.add_subcategory = false
                 axios.get('/subcategories/findByCategory/' + category_id).then(({data}) => {
                     this.subcategories = data
-                    console.log(this.subcategories.length)
                     this.subcategories.length ? this.getProducts(index+1, 0) : 0
                 })
                 this.tab_category = index
@@ -237,7 +244,7 @@
                 this.activeModalPersonalizeProduct = true
             },
             getProductPersonalized(product){
-                this.updateProductIngredients(product.id, product.product_ingredients)
+                this.updateProductIngredients(product.id, product.ingredients)
             },
             updateProductIngredients(product_id, ingredients){
                 axios.put('/products/' + product_id + '/ingredients', { ingredients: ingredients }).then((data) => {
