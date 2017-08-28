@@ -27,7 +27,7 @@ Route::put('/orders/updateDelivered/{order}', 'OrderController@updateDelivered')
 Route::resource('/orders', 'OrderController');
 
 //Stats
-Route::get('/stats/orders', 'StatsController@orders');
+Route::get('/statistics', 'StatsController@orders');
 
 Route::get('/test', function(){
     $user = User::existsWithEmail('kuamatzi2n@gmail.com')->first();

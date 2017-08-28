@@ -14,8 +14,8 @@ class StatsController extends Controller
 {
     public function orders()
     {
-        $start_date = 4;
-        $end_date = 8;
+        $start_date = Input::get('start_date');
+        $end_date = Input::get('end_date');
 
         $values = [];
         $months = [];
