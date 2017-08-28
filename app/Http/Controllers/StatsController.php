@@ -14,6 +14,7 @@ class StatsController extends Controller
     public function orders()
     {
         $inicio = Input::get('inicio');
+        dd($inicio);
         $final = Input::get('final');
 
         $chart = Charts::create('bar', 'highcharts')
