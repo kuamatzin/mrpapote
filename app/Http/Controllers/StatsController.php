@@ -13,9 +13,8 @@ class StatsController extends Controller
 {
     public function orders()
     {
-        $inicio = Input::get('inicio');
-        dd($inicio);
-        $final = Input::get('final');
+        $start_date = Input::get('start_date');
+        $end_date = Input::get('end_date');
 
         $chart = Charts::create('bar', 'highcharts')
             // Setup the chart settings
@@ -27,9 +26,9 @@ class StatsController extends Controller
 
         $values = [];
         $months = [];
-        for ($inicio; $inicio <= $final; $inicio ++){
-            $months[] = Carbon::createFromFormat('!m', $inicio)->format('F');
-            array_push($values, Order::whereMonth('created_at', '=', $inicio)->count());
+        for ($start_date; $start_date <= $end_date; $start_date ++){
+            $months[] = Carbon::createFromFormat('!m', $start_date)->format('F');
+            array_push($values, Order::whereMonth('created_at', '=', $start_date)->count());
         }
 
 
