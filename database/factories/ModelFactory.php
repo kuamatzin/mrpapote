@@ -1,5 +1,7 @@
 <?php
 
+use Carbon\Carbon;
+
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     static $password;
 
@@ -28,7 +30,8 @@ $factory->define(App\Product::class, function (Faker\Generator $faker) {
         'name' => $faker->name,
         'description' => $faker->sentence,
         'price' => random_int(10, 70),
-        'active' => true
+        'active' => true,
+        'personalizable' => false
     ];
 });
 
@@ -45,6 +48,10 @@ $factory->define(App\Ingredient::class, function (Faker\Generator $faker) {
 
 $factory->define(App\Order::class, function (Faker\Generator $faker) {
     return [
-        'name' => $faker->name
+        'name' => $faker->name,
+        'total' => random_int(30, 300),
+        'delivered' => true,
+        'payed' => true
+        'created_at' => Carbon::today()
     ];
 });

@@ -19,6 +19,8 @@
                 'signedIn' => Auth::check()
             ]) !!};
         </script>
+
+        @yield('head-section')
     </head>
     <body>
         @include('nav')
