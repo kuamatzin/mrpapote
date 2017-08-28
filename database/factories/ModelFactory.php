@@ -51,7 +51,7 @@ $factory->define(App\Order::class, function (Faker\Generator $faker) {
         'name' => $faker->name,
         'total' => random_int(30, 300),
         'delivered' => true,
-        'payed' => true
+        'payed' => true,
         'created_at' => Carbon::today()
     ];
 });
