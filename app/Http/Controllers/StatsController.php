@@ -14,8 +14,8 @@ class StatsController extends Controller
 {
     public function orders()
     {
-        $start_date = Input::get('start_date');
-        $end_date = Input::get('end_date');
+        $start_date = 4;
+        $end_date = 8;
 
         $values = [];
         $months = [];
@@ -27,15 +27,11 @@ class StatsController extends Controller
 
 
         $chart = Charts::create('bar', 'highcharts')
-            // Setup the chart settings
             ->title("Estadísticas")
-            // A dimension of 0 means it will take 100% of the space
-            ->dimensions(0, 400) // Width x Height
-            // This defines a preset of colors already done:)
+            ->dimensions(0, 400)
             ->template("material")
             ->values($values)
             ->elementLabel("Ventas")
-            // Setup what the values mean
             ->labels($months);
 
         return view('stats.index', compact('chart'));
