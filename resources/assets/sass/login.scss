@@ -10,11 +10,10 @@
 
 .email-input,
 .password-input {
-  border-radius: 40px;
-  font-size: 20px;
+  border-radius: 10px;
+  font-size: 15px;
   padding-left: 15px;
 }
-
 
 .icon.user,
 .icon.password {
@@ -42,7 +41,6 @@
 }
 
 .hero-body .container {
-  margin-top: -100px;
 }
 
 .hero.is-dark .section {
@@ -62,7 +60,6 @@
 }
 
 .hero-banner .title {
-  display: inline-block;
   background-color: rgba(0,0,0, 0.6);
   padding: 5px;
 }

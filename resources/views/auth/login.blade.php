@@ -24,12 +24,11 @@
         </section>
       </div>
       <div class="column is-4">
-        <section class="hero is-fullheight">
-          <div class="hero-heading">
-            <div class="section has-text-centered">
-              <h1 style="font-size: 2.5em">Mi Changarro</h1>
+        <section class="hero is-fullheight" style="padding-top: 70px">
+            <div class="columns">
+                <div class="column is-6 is-offset-3"><img src="/img/logo.png">
+                </div>
             </div>
-          </div>
           <div class="hero-body">
             <div class="container">
               <div class="columns">

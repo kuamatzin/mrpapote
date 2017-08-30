@@ -39,7 +39,7 @@
 
 <script>
     export default {
-        props: ['activeModal', 'id', 'name', 'ingredients', 'price', 'button'],
+        props: ['activeModal', 'id', 'name', 'ingredients', 'price', 'button', 'index'],
         computed: {
            chunkedIngredients () {
              return _.chunk(this.all_ingredients, Math.round(this.all_ingredients.length/3))
@@ -49,22 +49,16 @@
            }
         },
         watch: {
-            id(value){
-                this.creation.id = value
-            },
-            name(value){
-                this.creation.name = value + " personalizado"
-            },
-            ingredients(value){
-                this.creation.ingredients = value
-            },
-            price(value){
-                this.creation.price = value
-            },
             activeModal() {
                 this.active = !this.active;
                 this.active ? this.getIngredients() : 0
                 this.creation.ingredients = this.ingredients
+                this.creation.id = this.id
+                this.creation.name = this.index != 'false' ? this.name : this.name + ' personalizado'
+                this.creation.ingredients = this.ingredients
+                this.creation.quantity = 1
+                this.creation.index = this.index
+                this.creation.price = this.price
             }
         },
         data() {
@@ -72,18 +66,18 @@
                 creation: {
                     id: '',
                     name: '',
-                    ingredients: [],
+                    ingredients: [], // Personalizable ingredients
                     personalizable: true,
                     quantity: 1,
                     price: 0
                 },
                 active: this.activeModal,
-                all_ingredients: '',
+                all_ingredients: '', // All ingredients from database
             }
         },
         methods: {
             closeModal(){
-                this.$emit('closeModal');
+                this.$emit('closeModal')
             },
             getIngredients(){
                 axios.get('/ingredients').then(({data}) => {
@@ -99,9 +93,19 @@
             },
             createProduct(){
                 this.$emit('getProductPersonalized', this.creation)
-                this.creation.ingredients = []
                 this.closeModal()
+            },
+            resetValues(){
+                this.creation.id = ''
+                this.creation.name= ''
+                this.creation.ingredients = []
+                this.creation.personalizable = ''
+                this.creation.quantity = ''
+                this.creation.price = ''
             }
         }
     }
 </script>
+
+
+

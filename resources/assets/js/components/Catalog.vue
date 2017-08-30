@@ -6,7 +6,7 @@
             <li :class="{ 'is-active' : active_section == 2}" @click="active_section = 2"><a href="#">Ingredientes</a></li>
         </ul>
     </nav>
-    
+
     <div v-if="active_section == 1">
         <section class="hero is-primary">
             <div class="hero-body">
@@ -91,7 +91,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Products -->
             <div class="products" v-if="subcategories.length">
                 <br>
@@ -118,14 +118,14 @@
                 </table>
             </div>
 
-            <personalize-product 
-              :activeModal="activeModalPersonalizeProduct" 
-              :id="personalize_product.id" 
-              :name="personalize_product.name" 
-              :ingredients="personalize_product.ingredients" 
-              :price="personalize_product.price" 
-              :button="'Guardar ingredientes'" 
-              @getProductPersonalized="getProductPersonalized" 
+            <personalize-product
+              :activeModal="activeModalPersonalizeProduct"
+              :id="personalize_product.id"
+              :name="personalize_product.name"
+              :ingredients="personalize_product.ingredients"
+              :price="personalize_product.price"
+              :button="'Guardar ingredientes'"
+              @getProductPersonalized="getProductPersonalized"
               @closeModal="closeModal">
             </personalize-product>
         </div>
@@ -159,7 +159,7 @@
 
     export default {
         components: { PersonalizeProduct },
-        
+
         mounted() {
             this.getCategories().then(data => {
                 this.getSubcategories(data[0].id, 0)
@@ -205,7 +205,7 @@
                 this.active_subcategory = subcategory_id;
                 axios.get('/products/findBySubcategory/' + subcategory_id).then(({data}) => {
                     this.products = data
-                    this.products.length <= 0 ? this.resetAnimation('noProducts', 'pulse') : this.resetAnimation('products', 'bounceInRight')  
+                    this.products.length <= 0 ? this.resetAnimation('noProducts', 'pulse') : this.resetAnimation('products', 'bounceInRight')
                 })
             },
             addCategory(){
@@ -213,13 +213,13 @@
                     this.getCategories()
                     this.cancelAddCategory()
                 });
-            },  
+            },
             addSubcategory(){
                 axios.post('/subcategories', { category_id: this.active_category, name: this.subcategory_name }).then(data => {
                     this.subcategory_name = ''
                     this.getSubcategories(this.active_category, this.subcategories.length)
                     this.add_subcategory = false
-                });       
+                });
             },
             closeModal(){
                 this.activeModal = false
