@@ -20,6 +20,8 @@ try {
 
 window.axios = require('axios');
 
+window.cloneDeep = require('clone-deep');
+
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /**

@@ -217,13 +217,13 @@
             setPersonalizableProduct(product, index){
                 this.personalize_product.id = product.id
                 this.personalize_product.name = product.name
-                this.personalize_product.ingredients = JSON.parse(JSON.stringify(product.ingredients))
+                this.personalize_product.ingredients = cloneDeep(product.ingredients)
                 this.personalize_product.price = product.price
                 this.personalize_product.index = index
                 this.personalize_product.personalizable = product.personalizable
             },
             getProductPersonalized(creation){
-                let product = JSON.parse(JSON.stringify(creation))
+                let product = cloneDeep(creation)
                 if(product.index != 'false') {
                     this.order_products[product.index] = product
                 }
