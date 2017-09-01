@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Input;
 
 class OrderController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function index()
     {
         return Auth::user()->orders()->getByDate(Input::get('date'))->get();

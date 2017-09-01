@@ -46,6 +46,13 @@ $factory->define(App\Ingredient::class, function (Faker\Generator $faker) {
     ];
 });
 
+
+$factory->define(App\Expense::class, function (Faker\Generator $faker) {
+    return [
+        'description' => $faker->paragraph,
+    ];
+});
+
 $factory->define(App\Order::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->name,

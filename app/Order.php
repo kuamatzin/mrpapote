@@ -124,7 +124,7 @@ class Order extends Model
 
     /**
      * Get orders by date
-     * @param  \Illuminate\Database\Eloquent\Builder $query $query
+     * @param  \Illuminate\Database\Eloquent\Builder $query
      * @param  String $date  
      * @return \Illuminate\Database\Eloquent\Builder
      */
@@ -132,5 +132,27 @@ class Order extends Model
     {
         //If date is null we proceed to get the "today's" orders
         return $date ? $query->whereRaw('date(created_at) = ?', [$date]) : $query->where('created_at', '>=', Carbon::today()->format('Y-m-d'));
+    }
+
+    /**
+     * Get total orders in the month
+     * @param  \Illuminate\Database\Eloquent\Builder $query 
+     * @param  Int $month
+     * @return  \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeTotalByMonth($query, $month)
+    {
+        return $query->whereMonth('created_at', '=', $month)->count();
+    }
+
+    /**
+     * Get total orders in the month
+     * @param  \Illuminate\Database\Eloquent\Builder $query 
+     * @param  Int $month
+     * @return  \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeTotalRevenueByMonth($query, $month)
+    {
+        return $query->whereMonth('created_at', '=', $month)->sum('total');
     }
 }

@@ -51,6 +51,22 @@ class User extends Authenticatable
         return $this->hasMany(SocialAccount::class);
     }
 
+    public function expenses()
+    {
+        return $this->hasMany(Expense::class);
+    }
+
+    /**
+     * Get total orders in the month
+     * @param  \Illuminate\Database\Eloquent\Builder $query 
+     * @param  Int $month
+     * @return  \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeTotalExpensesByMonth($query, $month)
+    {
+        return $query->whereMonth('buy_date', '=', $month)->sum('total');
+    }
+
     public static function scopeExistsWithEmail($query, $email)
     {
         return $query->whereEmail($email);

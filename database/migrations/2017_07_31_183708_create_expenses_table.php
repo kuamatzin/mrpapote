@@ -19,8 +19,10 @@ class CreateExpensesTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('supply_id')->unsigned()->nullable();
             $table->foreign('supply_id')->references('id')->on('supplies')->onDelete('cascade');
-            $table->text('description');
-            $table->text('file');
+            $table->text('description')->nullable();
+            $table->double('total');
+            $table->text('file')->nullable();
+            $table->date('buy_date');
             $table->timestamps();
         });
     }

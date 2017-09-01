@@ -26,6 +26,9 @@ Route::put('/orders/updatePayed/{order}', 'OrderController@updatePayed');
 Route::put('/orders/updateDelivered/{order}', 'OrderController@updateDelivered');
 Route::resource('/orders', 'OrderController');
 
+//Expenses
+Route::resource('/expenses', 'ExpenseController');
+
 //Stats
 Route::get('/statistics', 'StatsController@orders');
 
