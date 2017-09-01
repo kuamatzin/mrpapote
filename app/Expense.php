@@ -12,6 +12,10 @@ class Expense extends Model
 
     protected $dates = ['buy_date'];
 
+    /**
+     * Get the user
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -26,7 +30,7 @@ class Expense extends Model
     }
 
     /**
-     * Get total orders in the month
+     * Get the total of all expenses in a month
      * @param  \Illuminate\Database\Eloquent\Builder $query 
      * @param  Int $month
      * @return  \Illuminate\Database\Eloquent\Builder

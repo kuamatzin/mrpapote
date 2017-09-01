@@ -31,42 +31,57 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    /**
+     * Get the user orders
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function orders()
     {
         return $this->hasMany(Order::class);
     }
 
+    /**
+     * Get the user categories
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function categories()
     {
         return $this->hasMany(Category::class);
     }
 
+    /**
+     * Get the user ingredients
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function ingredients()
     {
         return $this->hasMany(Ingredient::class);
     }
 
+    /**
+     * Get the user socialAccounts
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function socialAccounts()
     {
         return $this->hasMany(SocialAccount::class);
     }
 
+    /**
+     * Get the user expenses
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function expenses()
     {
         return $this->hasMany(Expense::class);
     }
 
     /**
-     * Get total orders in the month
+     * Get the user if has the email provided
      * @param  \Illuminate\Database\Eloquent\Builder $query 
-     * @param  Int $month
+     * @param  Int $email
      * @return  \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeTotalExpensesByMonth($query, $month)
-    {
-        return $query->whereMonth('buy_date', '=', $month)->sum('total');
-    }
-
     public static function scopeExistsWithEmail($query, $email)
     {
         return $query->whereEmail($email);
