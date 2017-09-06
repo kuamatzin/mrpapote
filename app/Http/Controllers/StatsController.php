@@ -33,30 +33,28 @@ class StatsController extends Controller
         $this->middleware('auth');
     }
 
+    public function index()
+    {
+        return view('stats.index');
+    }
+
     public function orders()
     {
         $start_date = Input::get('start_date');
         $end_date = Input::get('end_date');
 
-        $orders = [];
+        $expenses = [];
         $revenue = [];
         $months = [];
 
         for ($start_date; $start_date <= $end_date; $start_date ++){
             //$months[] = Carbon::createFromFormat('!m', $start_date)->format('F');
             array_push($months, $this->months[$start_date - 1]);
-            $revenue[] = Auth::user()->orders()->totalRevenueByMonth($start_date);
-            $orders[] = Auth::user()->expenses()->totalExpensesByMonth($start_date);
+            $revenue[] = (int)Auth::user()->orders()->totalRevenueByMonth($start_date)->sum('total');
+            $expenses[] = Auth::user()->expenses()->totalExpensesByMonth($start_date)->sum('total');
+            $utilities[] = $revenue[count($revenue) - 1] - $expenses[count($expenses) - 1];
          }
 
-        $chart = Charts::multi('bar', 'highcharts')
-            ->title("Estadísticas")
-            ->dimensions(0, 400)
-            ->template("material")
-            ->dataset('Ganancias', $revenue)
-            ->dataset('Gastos', $orders)
-            ->labels($months);
-
-        return view('stats.index', compact('chart'));
+         return ['months' => $months, 'expenses' => $expenses, 'revenue' => $revenue, 'utilities' => $utilities];
     }
 }

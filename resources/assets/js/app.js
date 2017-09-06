@@ -43,16 +43,10 @@ $.fn.extend({
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('create-order', require('./components/CreateOrder.vue'));
 Vue.component('orders', require('./components/Orders.vue'));
-Vue.component('order-item', require('./components/OrderItem.vue'));
 Vue.component('categories', require('./components/Catalog.vue'));
-Vue.component('add-category', require('./components/AddCategory.vue'));
-Vue.component('subcategory', require('./components/Subcategory.vue'));
-Vue.component('product', require('./components/Product.vue'));
-Vue.component('add-product', require('./components/AddProduct.vue'));
-Vue.component('ingredients', require('./components/Ingredients.vue'));
 Vue.component('flash', require('vue-flash'));
+Vue.component('stats', require('./components/Stats.vue'));
 
 const app = new Vue({
     el: '#app'

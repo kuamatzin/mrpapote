@@ -30,7 +30,8 @@ Route::resource('/orders', 'OrderController');
 Route::resource('/expenses', 'ExpenseController');
 
 //Stats
-Route::get('/statistics', 'StatsController@orders');
+Route::get('/statistics', 'StatsController@index');
+Route::get('/statistics/orders', 'StatsController@orders');
 
 Route::get('/test', function(){
     $user = User::existsWithEmail('kuamatzi2n@gmail.com')->first();

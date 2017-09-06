@@ -37,6 +37,6 @@ class Expense extends Model
      */
     public function scopeTotalExpensesByMonth($query, $month)
     {
-        return $query->whereMonth('buy_date', '=', $month)->sum('total');
+        return $query->whereMonth('buy_date', '=', $month);
     }
 }

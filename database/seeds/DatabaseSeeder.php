@@ -46,7 +46,7 @@ class DatabaseSeeder extends Seeder
             }
 
             $faker = Faker::create();
-            for ($month = 5; $month < 9; $month ++){
+            for ($month = 1; $month < 10; $month ++){
                 for ($day = 1; $day < 29; $day ++) {
                     //Create expenses
                     $expense = $user->expenses()->save(factory(App\Expense::class)->make([

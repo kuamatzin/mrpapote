@@ -34,7 +34,7 @@
                             <span class="name">Administrador</span>
                         </a>
                         <a href="/expenses" class="item {{$active == 'expenses' ? 'active' : '' }}"><span class="icon"><i class="fa fa-th-list"></i></span><span class="name">Gastos</span></a>
-                        <a href="/statistics?start_date=5&end_date=8" class="item {{$active == 'stats' ? 'active' : '' }}"><span class="icon"><i class="fa fa-folder-o"></i></span><span class="name">Estadísticas</span></a>
+                        <a href="/statistics" class="item {{$active == 'stats' ? 'active' : '' }}"><span class="icon"><i class="fa fa-folder-o"></i></span><span class="name">Estadísticas</span></a>
                     </div>
                 </div>
             </aside>

@@ -56,10 +56,13 @@
 <script>
 import moment from 'moment'
 import Datepicker from 'vuejs-datepicker'
+import OrderItem from './OrderItem.vue'
+import CreateOrder from './CreateOrder.vue'
+
 moment.locale('es');
 
 export default {
-    components: { Datepicker },
+    components: { Datepicker, OrderItem, CreateOrder },
     computed: {
         total_orders(){
             let total = 0

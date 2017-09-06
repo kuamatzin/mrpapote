@@ -142,7 +142,7 @@ class Order extends Model
      */
     public function scopeTotalByMonth($query, $month)
     {
-        return $query->whereMonth('created_at', '=', $month)->count();
+        return $query->whereMonth('created_at', '=', $month);
     }
 
     /**
@@ -153,6 +153,6 @@ class Order extends Model
      */
     public function scopeTotalRevenueByMonth($query, $month)
     {
-        return $query->whereMonth('created_at', '=', $month)->sum('total');
+        return $query->whereMonth('created_at', '=', $month);
     }
 }

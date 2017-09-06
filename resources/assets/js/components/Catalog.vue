@@ -156,9 +156,12 @@
 
 <script>
     import PersonalizeProduct from './PersonalizeProduct.vue'
+    import AddProduct from './AddProduct.vue'
+    import Ingredients from './Ingredients.vue'
+    import Product from './Product.vue'
 
     export default {
-        components: { PersonalizeProduct },
+        components: { PersonalizeProduct, AddProduct, Ingredients, Product },
 
         mounted() {
             this.getCategories().then(data => {
