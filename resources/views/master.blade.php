@@ -28,13 +28,13 @@
             <aside class="column is-2 aside hero is-fullheight is-hidden-mobile">
                 <div>
                     <div class="main">
-                        <a href="/" class="item {{$active == 'orders' ? 'active' : '' }}"><span class="icon"><i class="fa fa-home"></i></span><span class="name">Ordenes</span></a>
+                        <a href="/" class="item {{$active == 'orders' ? 'active' : '' }}"><span class="icon"><i class="fa fa-list-ol"></i></span><span class="name">Ordenes</span></a>
                         <a href="/admin" class="item {{$active == 'admin' ? 'active' : '' }}">
-                            <span class="icon"><i class="fa fa-map-marker"></i></span>
+                            <span class="icon"><i class="fa fa-user-circle-o"></i></span>
                             <span class="name">Administrador</span>
                         </a>
-                        <a href="/expenses" class="item {{$active == 'expenses' ? 'active' : '' }}"><span class="icon"><i class="fa fa-th-list"></i></span><span class="name">Gastos</span></a>
-                        <a href="/statistics" class="item {{$active == 'stats' ? 'active' : '' }}"><span class="icon"><i class="fa fa-folder-o"></i></span><span class="name">Estadísticas</span></a>
+                        <a href="/expenses" class="item {{$active == 'expenses' ? 'active' : '' }}"><span class="icon"><i class="fa fa-money"></i></span><span class="name">Gastos</span></a>
+                        <a href="/statistics" class="item {{$active == 'stats' ? 'active' : '' }}"><span class="icon"><i class="fa fa-line-chart"></i></span><span class="name">Estadísticas</span></a>
                     </div>
                 </div>
             </aside>

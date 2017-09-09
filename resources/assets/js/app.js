@@ -47,6 +47,7 @@ Vue.component('orders', require('./components/Orders.vue'));
 Vue.component('categories', require('./components/Catalog.vue'));
 Vue.component('flash', require('vue-flash'));
 Vue.component('stats', require('./components/Stats.vue'));
+Vue.component('expenses', require('./components/Expenses.vue'));
 
 const app = new Vue({
     el: '#app'

@@ -4,7 +4,7 @@
         <div class="container">
             <div class="columns">
                 <div class="column is-10">
-
+                    <expenses></expenses>
                 </div>
             </div>
         </div>
