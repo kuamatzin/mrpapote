@@ -35,7 +35,7 @@ class Expense extends Model
      * @param  Int $month
      * @return  \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeTotalExpensesByMonth($query, $month)
+    public function scopeGetByMonth($query, $month)
     {
         return $query->whereMonth('buy_date', '=', $month);
     }

@@ -88,7 +88,7 @@ export default {
     },
     methods: {
         getOrders(){
-            axios.get('/orders').then(({data}) => this.orders = data)
+            axios.get('/orders?date=' + moment(this.date).format('YYYY-MM-DD')).then(({data}) => this.orders = data)
         },
         orderCreated(updated){
             updated ? this.getOrdersByDate() : this.getOrders

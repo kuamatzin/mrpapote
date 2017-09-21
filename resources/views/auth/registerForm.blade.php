@@ -39,6 +39,9 @@
         </span>
       </p>
       <p class="control login">
+        {!! app('captcha')->render(); !!}
+      </p>
+      <p class="control login">
         <button type="submit" class="button is-success is-outlined is-large is-fullwidth">Registrarse</button>
       </p>
     </form>

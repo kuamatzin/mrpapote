@@ -1,8 +1,10 @@
 <?php
 
 use App\User;
+use Illuminate\Http\Request;
 
-Route::get('/', 'PageController@orders');
+Route::get('/', 'PageController@index');
+Route::get('/mysales', 'PageController@orders');
 Route::get('/admin', 'PageController@admin');
 
 //Products
@@ -32,12 +34,14 @@ Route::resource('/expenses', 'ExpenseController');
 
 //Stats
 Route::get('/statistics', 'StatsController@index');
-Route::get('/statistics/orders', 'StatsController@orders');
+Route::get('/statistics/product/{product}', 'StatsController@getByProduct');
+Route::get('/statistics/subcategory/{subcategory}', 'StatsController@getBySubcategory');
+Route::get('/statistics/subcategoryProducts/{subcategory}', 'StatsController@getBySubcategoryProducts');
+Route::get('/statistics/generalStats', 'StatsController@generalStats');
 
-Route::get('/test', function(){
-    $user = User::existsWithEmail('kuamatzi2n@gmail.com')->first();
-    dd($user);
-});
+
+//Subscribe
+Route::post('subscribe/{plan}', 'SubscribeController@subscribe');
 
 //Social Login
 Route::get('/redirect', 'SocialAuthController@redirect');

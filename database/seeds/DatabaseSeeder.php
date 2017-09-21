@@ -65,7 +65,8 @@ class DatabaseSeeder extends Seeder
                         ]));
 
                         $number_products = random_int(1, 8);
-                        $array_products = range(1, 6);
+                        $array_products = range(1, 30);
+                        shuffle($array_products);
                         $order->products()->attach(array_slice($array_products, 0, $number_products));
                     }
                 }

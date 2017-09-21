@@ -6,6 +6,7 @@ use App\Expense;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Storage;
 
 class ExpenseController extends Controller
 {
@@ -53,6 +54,7 @@ class ExpenseController extends Controller
             'buy_date' => 'required|date'
         ]);
 
+        $expense->file = $this->storeOrDelete($expense, $request);
         $expense->description = $request->description;
         $expense->total = $request->total;
         $expense->buy_date = $request->buy_date;
@@ -60,6 +62,22 @@ class ExpenseController extends Controller
         
         return $expense;
 
+    }
+
+    private function storeOrDelete($expense, $request)
+    {
+        return $expense->file ? $this->deleteImage($expense, $request) : $this->storeImage($request);
+    }
+
+    private function storeImage($request)
+    {
+        return $request->hasFile('file') ? $request->file('file')->store('expenses', 'public') : null;
+    }
+
+    private function deleteImage($expense, $request)
+    {
+        unlink(storage_path() . '/app/public/' .$expense->file);
+        return $this->storeImage($request);
     }
 
 

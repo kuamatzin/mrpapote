@@ -26,7 +26,7 @@
       <div class="column is-4">
         <section class="hero is-fullheight" style="padding-top: 70px">
             <div class="columns">
-                <div class="column is-6 is-offset-3"><img src="/img/logo.png">
+                <div class="column is-4 is-offset-4"><img src="/img/logo.png">
                 </div>
             </div>
           <div class="hero-body">

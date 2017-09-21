@@ -8,10 +8,11 @@ use App\Order;
 use App\SocialAccount;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Cashier\Billable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, Billable;
 
     /**
      * The attributes that are mass assignable.
@@ -85,5 +86,19 @@ class User extends Authenticatable
     public static function scopeExistsWithEmail($query, $email)
     {
         return $query->whereEmail($email);
+    }
+
+
+    public function products()
+    {
+        return Product::join('subcategories', 'products.subcategory_id', '=', 'subcategories.id')
+                ->join('categories', 'subcategories.category_id', '=', 'categories.id')
+                ->where('categories.user_id', $this->id)
+                ->select('products.*');
+    }
+
+    public function subcategories()
+    {
+        return $this->hasManyThrough(Subcategory::class, Cate::class);
     }
 }

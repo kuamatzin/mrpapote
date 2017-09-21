@@ -48,6 +48,8 @@ Vue.component('categories', require('./components/Catalog.vue'));
 Vue.component('flash', require('vue-flash'));
 Vue.component('stats', require('./components/Stats.vue'));
 Vue.component('expenses', require('./components/Expenses.vue'));
+Vue.component('stats-by-product', require('./components/StatsByProduct.vue'));
+Vue.component('checkout-form', require('./components/CheckoutForm.vue'));
 
 const app = new Vue({
     el: '#app'

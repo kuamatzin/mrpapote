@@ -169,6 +169,8 @@ return [
         Laravel\Tinker\TinkerServiceProvider::class,
         ConsoleTVs\Charts\ChartsServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
+        AlbertCht\InvisibleReCaptcha\InvisibleReCaptchaServiceProvider::class,
+        Laravel\Cashier\CashierServiceProvider::class,
         /*
          * Application Service Providers...
          */

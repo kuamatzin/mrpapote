@@ -13,6 +13,10 @@ class Product extends Model
     protected $guarded = [];
 
     protected $appends = ['category_name'];
+
+    protected $hidden = [
+       'subcategory'
+    ];
     /**
      * Get subcategories
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -46,7 +50,8 @@ class Product extends Model
      */
     public function getCategoryNameAttribute()
     {
-        return $this->subcategory->category->name;
+        return $this->attributes['category_name'] = 
+        $this->subcategory->category->name;
     }
 
     /**
@@ -64,4 +69,11 @@ class Product extends Model
             }
         }
     }
+
+    public function stats($month)
+    {
+        return Orderable::whereIn('order_id', Order::getByMonth($month)->pluck('id'))->where('orderable_type', 'App\Product')->where('orderable_id', $this->id);
+    }
 }
+
+

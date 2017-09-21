@@ -10,7 +10,7 @@
     <td v-if="edit">
         <div class="file" style="padding: 0px">
             <label class="file-label">
-                <input class="file-input" type="file" name="resume">
+                <input class="file-input" type="file" name="resume" @change="fileChanged">
                 <span class="file-cta">
                     <span class="file-icon">
                         <i class="fa fa-upload"></i>
@@ -22,7 +22,14 @@
             </label>
         </div>
     </td>
-    <td v-else>{{ fileFormated }}</td>
+    <td v-else>
+        <div v-if="file">
+            <a download :href="file" class="button is-primary">Descargar</a>
+        </div>
+        <div v-else>
+            Sin Archivo
+        </div>
+    </td>
     <td v-if="edit">
         <input class="input is-primary" type="text" placeholder="Total" v-model="total" required @keydown="errors.clear('total')">
 
@@ -34,7 +41,7 @@
         <span class="help is-danger" v-if="errors.get('buy_date')" v-text="errors.get('buy_date')"></span>
         <div style="padding-top:10px">
             <!-- Save or Cancel -->
-            <button class="button is-primary is-small" @click="updateExpense" :disabled="errors.any()">
+            <button class="button is-primary is-small" @click="createForm" :disabled="errors.any()">
               Guardar
             </button>
 
@@ -65,9 +72,6 @@
         props: ['expense', 'index'],
 
         computed: {
-            fileFormated(){
-                return this.file ? this.file : 'Sin Archivo' 
-            },
             moneyFormat(){
                 return parseInt(this.total).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
             },
@@ -94,8 +98,20 @@
                 this.edit = false
             },
 
-            updateExpense(){
-                axios.put('/expenses/' + this.expense.id, { description: this.description, total: this.total, buy_date: this.buy_date }).then( ({data}) => {
+            createForm(){
+                let form = new FormData()
+
+                form.append('description', this.description)
+                form.append('total', this.total)
+                form.append('buy_date', this.buy_date)
+                form.append('file', this.file)
+                form.append('_method', 'PUT') //This line is important
+                this.updateExpense(form)
+            },
+
+            updateExpense(form){
+                //Defined as a POST method but acts like a PUT method cuz we append the 'method' => PUT value in the form (FormData) object in the creaeForm method
+                axios.post('/expenses/' + this.expense.id, form).then( ({data}) => {
                     this.edit = false
                     this.description = data.description
                     this.total = data.total
@@ -117,6 +133,12 @@
                 },
                 () => axios.delete('/expenses/' + this.expense.id).then(data => this.$emit('expenseDeleted', this.index))
                 )
+            },
+
+            fileChanged(e){
+                if (! e.target.files.length) return;
+
+                this.file = e.target.files[0]
             }
         }
     }

@@ -5,9 +5,18 @@ namespace App\Http\Controllers;
 use App\Product;
 use App\Subcategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
+    /**
+     * Get all Products
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function index()
+    {
+        return Auth::user()->products()->get();
+    }
 
     /**
      * Get products by subcategory

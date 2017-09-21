@@ -140,18 +140,7 @@ class Order extends Model
      * @param  Int $month
      * @return  \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeTotalByMonth($query, $month)
-    {
-        return $query->whereMonth('created_at', '=', $month);
-    }
-
-    /**
-     * Get total orders in the month
-     * @param  \Illuminate\Database\Eloquent\Builder $query 
-     * @param  Int $month
-     * @return  \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeTotalRevenueByMonth($query, $month)
+    public function scopeGetByMonth($query, $month)
     {
         return $query->whereMonth('created_at', '=', $month);
     }

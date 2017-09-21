@@ -16,7 +16,8 @@
         <script>
             window.App = {!! json_encode([
                 'user' => Auth::user(),
-                'signedIn' => Auth::check()
+                'signedIn' => Auth::check(),
+                'stripeKey' => config('services.stripe.key')
             ]) !!};
         </script>
 
@@ -28,10 +29,10 @@
             <aside class="column is-2 aside hero is-fullheight is-hidden-mobile">
                 <div>
                     <div class="main">
-                        <a href="/" class="item {{$active == 'orders' ? 'active' : '' }}"><span class="icon"><i class="fa fa-list-ol"></i></span><span class="name">Ordenes</span></a>
+                        <a href="/mysales" class="item {{$active == 'orders' ? 'active' : '' }}"><span class="icon"><i class="fa fa-list-ol"></i></span><span class="name">Ordenes</span></a>
                         <a href="/admin" class="item {{$active == 'admin' ? 'active' : '' }}">
                             <span class="icon"><i class="fa fa-user-circle-o"></i></span>
-                            <span class="name">Administrador</span>
+                            <span class="name">Admin</span>
                         </a>
                         <a href="/expenses" class="item {{$active == 'expenses' ? 'active' : '' }}"><span class="icon"><i class="fa fa-money"></i></span><span class="name">Gastos</span></a>
                         <a href="/statistics" class="item {{$active == 'stats' ? 'active' : '' }}"><span class="icon"><i class="fa fa-line-chart"></i></span><span class="name">Estadísticas</span></a>
@@ -54,6 +55,7 @@
             </div>
         </footer>
         <!-- Scripts -->
+        <script src="https://checkout.stripe.com/checkout.js"></script>
         <script src="{{ asset('js/app.js') }}"></script>
         @yield('scripts')
     </body>

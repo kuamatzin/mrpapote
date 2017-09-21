@@ -13,7 +13,12 @@ class PageController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->only(['orders', 'admin']);
+    }
+
+    public function index()
+    {
+        return view('page.home');
     }
 
     /**
@@ -22,8 +27,7 @@ class PageController extends Controller
      */
     public function orders()
     {
-        $orders = Order::all();
-        return view('page.orders', compact('orders'));
+        return view('page.orders');
     }
 
     public function admin()

@@ -28,7 +28,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $redirectTo = '/mysales';
 
     /**
      * Create a new controller instance.
@@ -49,6 +49,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
+            'g-recaptcha-response' => 'required|captcha',
             'name' => 'required|string|max:255',
             'email_register' => 'required|string|email|max:255|unique:users,email',
             'passwordregister' => 'required|string|min:6|confirmed',

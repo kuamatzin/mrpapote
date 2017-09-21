@@ -37,14 +37,19 @@ return [
 
     'facebook' => [
         'client_id' => '110979386282749',
-        'client_secret' => 'a2bee04c75eb7b898df8e88acd3db350',
+        'client_secret' => env('FACEBOOK_SECRET'),
         'redirect' => env('FACEBOOK_CALLBACK'),
     ],
 
     'google' => [
         'client_id' => '7270026181-ua2ts72n80naftjc5sefc4al3j2cshve.apps.googleusercontent.com',
-        'client_secret' => 'bt6SOi_T8z12tApNMPdOnqNc',
+        'client_secret' => env('GOOGLE_SECRET'),
         'redirect' => env('GOOGLE_CALLBACK'),
+    ],
+    'stripe' => [
+        'model'  => App\User::class,
+        'key' => env('STRIPE_KEY'),
+        'secret' => env('STRIPE_SECRET'),
     ],
 
 ];
