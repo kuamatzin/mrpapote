@@ -7,7 +7,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 
     return [
         'name' => $faker->name,
-        'email' => 'test@gmail.com',
+        'email' => $faker->email,
         'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
     ];
@@ -15,6 +15,9 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 
 $factory->define(App\Category::class, function (Faker\Generator $faker) {
     return [
+        'user_id' => function () {
+            return factory('App\User')->create()->id;
+        },
         'name' => $faker->name
     ];
 });

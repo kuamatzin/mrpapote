@@ -54,6 +54,8 @@
     import VueMonthlyPicker from 'vue-monthly-picker'
     import NewExpense from './NewExpense.vue'
     import Expense from './Expense.vue'
+    import ExpenseApi from '../helpers/Expense'
+    import DateFormater from '../helpers/DateFormater'
     import moment from 'moment'
 
     export default {
@@ -71,6 +73,8 @@
 
         data(){
             return {
+                dateTrs: new DateFormater(),
+                expense_api: new ExpenseApi(),
                 labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
                 expensesMonth: moment().format("YYYY-MM"),
                 expenses: '',
@@ -80,7 +84,7 @@
 
         methods: {
             getExpenses(){
-                axios.get('/expenses/getByMonth?month=' + moment(this.expensesMonth._i).format('M')).then(({data}) => this.expenses = data)
+                this.expense_api.getByMonth(this.dateTrs.month(this.expensesMonth)).then(({data}) => this.expenses = data)
             },
             newExpense(expense){
                 this.register_expense = false

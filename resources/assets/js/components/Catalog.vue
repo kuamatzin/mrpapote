@@ -159,17 +159,21 @@
     import AddProduct from './AddProduct.vue'
     import Ingredients from './Ingredients.vue'
     import Product from './Product.vue'
+    import Category from '../helpers/Category'
+    import Subcategory from '../helpers/Subcategory'
+    import ProductApi from '../helpers/Product'
 
     export default {
         components: { PersonalizeProduct, AddProduct, Ingredients, Product },
 
         mounted() {
-            this.getCategories().then(data => {
-                this.getSubcategories(data[0].id, 0)
-            })
+            this.getCategories()
         },
         data() {
             return {
+                category_api: new Category(),
+                subcategory_api: new Subcategory(),
+                product_api: new ProductApi(),
                 active_section: 1,
                 categories: '',
                 subcategories: '',
@@ -189,14 +193,17 @@
         },
         methods: {
             getCategories(){
-                return axios.get('/categories').then(({data}) => this.categories = data)
+                this.category_api.getUserCategories().then(({data}) => {
+                    this.categories = data
+                    this.getSubcategories(data[0].id, 0)
+                })
             },
             getSubcategories(category_id, index){
                 this.active_subcategory = ''
                 this.active_category = category_id
                 this.products = ''
                 this.add_subcategory = false
-                axios.get('/subcategories/findByCategory/' + category_id).then(({data}) => {
+                this.subcategory_api.getByCategory(category_id).then(({data}) => {
                     this.subcategories = data
                     this.subcategories.length ? this.getProducts(index+1, 0) : 0
                 })
@@ -206,19 +213,19 @@
             getProducts(subcategory_id, subcategory_index){
                 this.tab_subcategory = subcategory_index
                 this.active_subcategory = subcategory_id;
-                axios.get('/products/findBySubcategory/' + subcategory_id).then(({data}) => {
+                this.product_api.getBySubcategory(subcategory_id).then(({data}) => {
                     this.products = data
                     this.products.length <= 0 ? this.resetAnimation('noProducts', 'pulse') : this.resetAnimation('products', 'bounceInRight')
                 })
             },
             addCategory(){
-                axios.post('/categories', { name: this.category_name }).then(({data}) => {
+                this.category_api.store({ name: this.category_name }).then(({data}) => {
                     this.getCategories()
                     this.cancelAddCategory()
                 });
             },
             addSubcategory(){
-                axios.post('/subcategories', { category_id: this.active_category, name: this.subcategory_name }).then(data => {
+                this.subcategory_api.store({ category_id: this.active_category, name: this.subcategory_name }).then(data => {
                     this.subcategory_name = ''
                     this.getSubcategories(this.active_category, this.subcategories.length)
                     this.add_subcategory = false
@@ -250,7 +257,7 @@
                 this.updateProductIngredients(product.id, product.ingredients)
             },
             updateProductIngredients(product_id, ingredients){
-                axios.put('/products/' + product_id + '/ingredients', { ingredients: ingredients }).then((data) => {
+                this.subcategory_api.update(product_id,  { ingredients: ingredients }).then((data) => {
                     flash('Ingredientes actualizados', 'success')})
             },
             cancelAddSubcategory(){

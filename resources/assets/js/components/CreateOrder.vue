@@ -98,7 +98,7 @@
                                 <td>${{product.price}}</td>
                                 <td></td>
                                 <td>
-                                    <a class="button is-success is-outlined" @click="addProductToOrder(product, product.subcategory.category.name)">Agregar a orden</a>
+                                    <a class="button is-success is-outlined" @click="addProductToOrder(product)">Agregar a orden</a>
                                 </td>
                                 <td>
                                     <a class="button is-info is-outlined" @click="personalizeProduct(product)">Personalizar</a>
@@ -129,6 +129,9 @@
 <script>
     import sweetalert from 'sweetalert'
     import PersonalizeProduct from './PersonalizeProduct.vue'
+    import Category from '../helpers/Category'
+    import Subcategory from '../helpers/Subcategory'
+    import Product from '../helpers/Product'
 
     export default {
         components: { PersonalizeProduct },
@@ -144,6 +147,9 @@
         },
         data() {
             return {
+                category_api: new Category(),
+                subcategory_api: new Subcategory(),
+                product_api: new Product(),
                 name: '',
                 categories: '',
                 subcategories: '',
@@ -164,24 +170,24 @@
                 this.getDataOrder()
             },
             getDataOrder(){
-                axios.get('/orders/' + this.active_order.id).then(({data}) => {
+                this.order_api.getProductsFromOrder(this.active_order.id).then(({data}) => {
                     this.order_products = data.products
                 })
             },
             getCategories(){
-                axios.get('/categories').then(({data}) => {
+                this.category_api.getUserCategories().then(({data}) => {
                     this.categories = data
                     this.categories ? this.getSubcategories(this.categories[0].id, 0) : false
                 })
             },
             getSubcategories(id, index){
-                axios.get('/subcategories/findByCategory/' + id).then(({data}) => this.subcategories = data)
+                this.subcategory_api.getByCategory(id).then(({data}) => this.subcategories = data)
                 this.tab_index = index
             },
             getProducts(id){
-                axios.get('/products/findBySubcategory/' + id).then(({data}) => this.products = data)
+                this.product_api.getBySubcategory(id).then(({data}) => this.products = data)
             },
-            addProductToOrder(product, category){
+            addProductToOrder(product){
                 let index = _.findIndex(this.order_products, productItem => { return productItem.id == product.id && productItem.personalizable == product.personalizable })
                 //Product added before, need to update quantity and price
                 if(index > -1) {
@@ -242,13 +248,13 @@
                 }
             },
             createOrder(){
-                axios.post('/orders', { name: this.name, total: this.total_price, order_products: this.order_products }).then(({data}) => {
+                this.order_api.store( { name: this.name, total: this.total_price, order_products: this.order_products }).then(({data}) => {
                     this.resetValues()
                     this.$emit('orderCreated')
                 });
             },
             updateOrder(){
-                axios.put('/orders/' + this.active_order.id, { name: this.name, total: this.total_price, order_products: this.order_products }).then(({data}) => {
+                this.order_api.update(this.active_order.id, { name: this.name, total: this.total_price, order_products: this.order_products }).then(({data}) => {
                     this.resetValues()
                     this.$emit('orderCreated', true)
                 });

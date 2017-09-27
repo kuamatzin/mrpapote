@@ -67,6 +67,7 @@
 <script>
     import moment from 'moment'
     import Errors from '../helpers/Errors'
+    import Expense from '../helpers/Expense'
 
     export default {
         props: ['expense', 'index'],
@@ -83,6 +84,7 @@
         data(){
             return {
                 errors: new Errors(),
+                expense_api: new Expense(),
                 edit: false,
                 description: this.expense.description,
                 file: this.expense.file,
@@ -111,7 +113,7 @@
 
             updateExpense(form){
                 //Defined as a POST method but acts like a PUT method cuz we append the 'method' => PUT value in the form (FormData) object in the creaeForm method
-                axios.post('/expenses/' + this.expense.id, form).then( ({data}) => {
+                this.expense_api.update(this.expense.id, form).then( ({data}) => {
                     this.edit = false
                     this.description = data.description
                     this.total = data.total
@@ -131,7 +133,7 @@
                   confirmButtonText: "Estoy seguro",
                   closeOnConfirm: true
                 },
-                () => axios.delete('/expenses/' + this.expense.id).then(data => this.$emit('expenseDeleted', this.index))
+                () => this.expense_api.delete(this.expense.id).then(data => this.$emit('expenseDeleted', this.index))
                 )
             },
 

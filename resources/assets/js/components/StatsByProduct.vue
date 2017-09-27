@@ -117,6 +117,10 @@
     import StatsSales from './LineChart.js'
     import VueMonthlyPicker from 'vue-monthly-picker'
     import moment from 'moment'
+    import Stat from '../helpers/Stat'
+    import Category from '../helpers/Category'
+    import Subcategory from '../helpers/Subcategory'
+    import Product from '../helpers/Product'
 
     export default {
         components: { StatsSales, VueMonthlyPicker },
@@ -129,6 +133,10 @@
 
         data(){
             return {
+                stat_api: new Stat(),
+                category_api: new Category(),
+                subcategory_api: new Subcategory(),
+                product_api: new Product(),
                 chart_data: {
                     labels: [],
                     datasets: [
@@ -163,7 +171,7 @@
 
         methods: {
             getCategories(){
-                axios.get('/categories').then(({data}) => {
+                this.category_api.getUserCategories().then(({data}) => {
                     this.categories = data
                     this.category_selected = this.categories[0].id
                     this.getSubcategories()
@@ -171,7 +179,7 @@
             },
 
             getSubcategories(){
-                axios.get('/subcategories/findByCategory/' + this.category_selected).then(({data}) => {
+                this.subcategory_api.getByCategory(this.category_selected).then(({data}) => {
                     this.subcategories = data
                     this.subcategory_selected = this.subcategories[0].id
                     this.getProducts()
@@ -179,7 +187,7 @@
             },
 
             getProducts(){
-                axios.get('/products/findBySubcategory/' + this.subcategory_selected).then(({data}) => {
+                this.product_api.getBySubcategory(this.subcategory_selected).then(({data}) => {
                     this.products = data
                     this.product_selected = this.products[0].id
                     this.getProductStats()
@@ -191,20 +199,20 @@
                     this.getProductStats()
                 }
                 else {
-                    this.getSubcategoryStats()
+                    this.getSubcategoryProductsStats()
                 }
             },
 
             getProductStats(){
-                axios.get('/statistics/product/' + this.product_selected + '?start_date=' + moment(this.startMonth._i).format('M') + '&end_date=' + moment(this.endMonth._i).format('M')).then(({data}) => this.setData(data))
+                this.stat_api.getByProduct(this.product_selected, moment(this.startMonth._i).format('M'), moment(this.endMonth._i).format('M')).then(({data}) => this.setData(data))
             },
 
             getSubcategoryStats(){
-                axios.get('/statistics/subcategory/' + this.subcategory_selected + '?start_date=' + moment(this.startMonth._i).format('M') + '&end_date=' + moment(this.endMonth._i).format('M')).then(({data}) => this.setData(data))
+                this.stat_api.getBySubcategory(this.subcategory_selected, moment(this.startMonth._i).format('M'), moment(this.endMonth._i).format('M')).then(({data}) => this.setData(data))
             },
 
             getSubcategoryProductsStats(){
-                axios.get('/statistics/subcategoryProducts/' + this.subcategory_selected + '?month=' + moment(this.startMonth._i).format('M')).then(({data}) => this.setData2(data))
+                this.stat_api.getBySubcategoryWithAllProducts(this.subcategory_selected, moment(this.startMonth._i).format('M')).then(({data}) => this.setData2(data))
             },
 
             setData(data){

@@ -20,7 +20,7 @@ class SocialAuthController extends Controller
     {
         $user = SocialAccountService::createOrGetUser($providerUser, $provider);
         Auth::login($user, true);
-        return redirect('/');
+        return redirect('/mysales');
     }
 
     /**

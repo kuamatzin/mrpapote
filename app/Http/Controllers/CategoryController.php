@@ -33,5 +33,9 @@ class CategoryController extends Controller
         ]);
 
         Category::create(['name' => $request->name, 'user_id' => Auth::id()]);
+
+        return response()->json([
+            'message' => 'Created',
+        ], 201);
     }
 }

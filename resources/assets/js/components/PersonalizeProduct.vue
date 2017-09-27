@@ -38,6 +38,8 @@
 </template>
 
 <script>
+    import Ingredient from '../helpers/Ingredient'
+
     export default {
         props: ['activeModal', 'id', 'name', 'ingredients', 'price', 'button', 'index'],
         computed: {
@@ -63,6 +65,7 @@
         },
         data() {
             return {
+                ingredient_api: new Ingredient(),
                 creation: {
                     id: '',
                     name: '',
@@ -80,7 +83,7 @@
                 this.$emit('closeModal')
             },
             getIngredients(){
-                axios.get('/ingredients').then(({data}) => {
+                this.ingredient_api.getUserIngredients().then(({data}) => {
                     this.all_ingredients = data
                 });
             },
