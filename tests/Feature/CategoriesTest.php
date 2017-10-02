@@ -2,8 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Category;
-use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
@@ -23,37 +21,30 @@ class CategoriesTest extends TestCase
     }
 
     /** @test */
-    function an_authenticated_user_may_participate_in_forum_threads()
+    function an_authenticated_user_can_create_categories()
     {
-        $user = factory(User::class)->create();
+        $user = factory('App\User')->create();
 
         $response = $this->actingAs($user)->json('POST', '/categories', ['name' => 'Sally']);
 
-        $response
-            ->assertStatus(201)
-            ->assertJson([
-                'message' => 'Created',
-            ]);
+        $response->assertStatus(201)->assertJson([
+            'message' => 'Created',
+        ]);
     }
 
     /** @test */
     function retrieve_user_categories()
     {
-        $this->actingAs(factory(User::class)->create())->json('POST', '/categories', ['name' => 'Sally']);
+        $user = factory('App\User')->create();
+        factory('App\Category')->create(['user_id' => $user->id]);
+        factory('App\Category')->create(['user_id' => $user->id]);
 
-        $this->json('POST', '/categories', ['name' => 'Sally 2']);
+        $response = $this->actingAs($user)->json('GET', 'categories');
 
-        $first_user_categories = $this->json('GET', 'categories');
+        $this->assertCount(2, $response->original);
 
-
-        $this->json('POST', 'logout');
-
-        $this->actingAs(factory(User::class)->create())->json('POST', '/categories', ['name' => 'Carlos']);
-
-        $second_user_categories = $this->json('GET', 'categories');
-
-        $this->assertCount(2, $first_user_categories->original);
-
-        $this->assertCount(1, $second_user_categories->original);
+        foreach ($response->original as $category) {
+            $this->assertInstanceOf('App\Category', $category);   
+        }
     }
 }

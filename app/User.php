@@ -99,6 +99,6 @@ class User extends Authenticatable
 
     public function subcategories()
     {
-        return $this->hasManyThrough(Subcategory::class, Cate::class);
+        return $this->hasManyThrough(Subcategory::class, Category::class);
     }
 }

@@ -4,11 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use App\Subcategory;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
+    /**
+     * Create a new ProductController instance.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Get all Products
      * @return \Illuminate\Database\Eloquent\Collection
@@ -25,6 +34,8 @@ class ProductController extends Controller
      */
     public function getBySubcategory(Subcategory $subcategory)
     {
+        $this->authorize('view', $subcategory);
+
         return Product::where('subcategory_id', $subcategory->id)->with('subcategory.category')->with('ingredients')->get();
     }
 
@@ -35,6 +46,8 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('view', Subcategory::findOrFail($request->subcategory_id));
+
         $this->validate($request, [
             'name' => 'required|max:50',
             'price' => 'required|numeric'
@@ -54,6 +67,8 @@ class ProductController extends Controller
      */
     public function update(Product $product, Request $request)
     {
+        $this->authorize($product);
+
         $this->validate($request, [
             'name' => 'required|max:50',
             'price' => 'required|numeric'
@@ -73,7 +88,13 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
+        $this->authorize($product);
+
         $product->delete();
+
+        return response()->json([
+            'message' => 'Deleted'
+        ], 200);
     }
 
     /**
@@ -83,6 +104,8 @@ class ProductController extends Controller
      */
     public function getProductIngredients(Product $product)
     {
+        $this->authorize('view', $product);
+
         return $product->ingredients;
     }
 
@@ -93,6 +116,8 @@ class ProductController extends Controller
      */
     public function updateIngredients(Product $product, Request $request)
     {
+        $this->authorize('view', $product);
+
         $product->syncIngredients($request->ingredients);
     }
 }

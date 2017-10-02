@@ -26,6 +26,11 @@ class CategoryController extends Controller
         return Auth::user()->categories;
     }
 
+    /**
+     * Store a new Category
+     * @param  Request $request 
+     * @return            
+     */
     public function store(Request $request)
     {
         $this->validate($request, [

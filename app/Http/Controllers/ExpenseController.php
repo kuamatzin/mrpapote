@@ -17,7 +17,7 @@ class ExpenseController extends Controller
 
     public function index()
     {
-        return view('expenses.index', compact('expenses'));
+        return view('expenses.index');
     }
 
     public function get()
