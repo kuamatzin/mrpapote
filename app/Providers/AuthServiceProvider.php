@@ -4,8 +4,10 @@ namespace App\Providers;
 
 use App\Category;
 use App\Ingredient;
+use App\Order;
 use App\Policies\CategoryPolicy;
 use App\Policies\IngredientPolicy;
+use App\Policies\OrderPolicy;
 use App\Policies\ProductPolicy;
 use App\Policies\SubcategoryPolicy;
 use App\Product;
@@ -25,6 +27,7 @@ class AuthServiceProvider extends ServiceProvider
         Category::class => CategoryPolicy::class,
         Ingredient::class => IngredientPolicy::class,
         Product::class => ProductPolicy::class,
+        Order::class => OrderPolicy::class
     ];
 
     /**

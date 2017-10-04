@@ -38,7 +38,7 @@
               </button>
               <div class="navbar-brand-wrap">
                 <a class="navbar-brand" href="#" style="color:white">
-                  mi changarro
+                  <img src="/img/white_logoss.png" alt="" class="img-responsive">
                 </a>
               </div>
             </div> <!-- .navbar-header -->
@@ -82,17 +82,17 @@
               </div>
               <div class="col-sm-6 col-md-p-l-1 m-t-60-xs-max">
                 <div class="col-inner clearfix">
-                  <img class="img-responsive float-r-sm-min m-x-auto-xs-max" src="assets/img/item/home.png" alt="" data-sr="right">
+                  <img class="img-responsive float-r-sm-min m-x-auto-xs-max" src="assets/img/michangarromac.png" alt="" data-sr="right">
                 </div>
               </div>
             </div>
           </div>
         </div> <!-- #home -->
 
-        <div id="about" class="section p-a-0 align-c">
+        <div id="about" class="section block-light p-a-0 align-c">
           <div class="container-fluid p-x-0">
             <div class="row row-table">
-              <div class="col-sm-4 block-invert p-x-30-sm-max p-x-60-md-min p-t-20-sm-min align-t-sm-min">
+              <div class="col-sm-4 p-x-30-sm-max p-x-60-md-min p-t-20-sm-min align-t-sm-min">
                 <div class="col-inner p-y-50-sm-min p-y-30-xs-max max-width m-x-auto-xs-max">
                   <div class="icon-box _center">
                     <div class="icon-box-media">
@@ -108,7 +108,7 @@
                 </div>
               </div>
 
-              <div class="col-sm-4 block-pink p-x-30-sm-max p-x-60-md-min p-t-20-sm-min align-t-sm-min">
+              <div class="col-sm-4 p-x-30-sm-max p-x-60-md-min p-t-20-sm-min align-t-sm-min">
                 <div class="col-inner p-y-50-sm-min p-y-30-xs-max max-width m-x-auto-xs-max">
                   <div class="icon-box _center">
                     <div class="icon-box-media">
@@ -124,7 +124,7 @@
                 </div>
               </div>
 
-              <div class="col-sm-4 block-light p-x-30-sm-max p-x-60-md-min p-t-20-sm-min align-t-sm-min">
+              <div class="col-sm-4 p-x-30-sm-max p-x-60-md-min p-t-20-sm-min align-t-sm-min">
                 <div class="col-inner p-y-50-sm-min p-y-30-xs-max max-width m-x-auto-xs-max">
                   <div class="icon-box _center">
                     <div class="icon-box-media">
@@ -168,31 +168,31 @@
               </div>
               <div class="col-sm-6 m-t-60-xs-max p-l-60-md-min">
                 <div class="col-inner clearfix">
-                  <img class="img-responsive float-r-sm-min m-x-auto-xs-max" src="assets/img/item/brief-1.png" alt="" data-sr="right">
+                  <img class="img-responsive float-r-sm-min m-x-auto-xs-max" src="assets/img/michangarroipad.png" alt="" data-sr="right">
                 </div>
               </div>
             </div>
           </div>
         </div> <!-- #brief_1 -->
 
-        <div id="brief_2" class="section block-warning align-c-xs-max">
+        <div id="brief_2" class="section block-default align-c-xs-max">
           <div class="container">
             <div class="row row-table">
               <div class="col-sm-6 m-b-60-xs-max p-r-60-md-min">
                 <div class="col-inner clearfix">
-                  <img class="img-responsive float-l-sm-min m-x-auto-xs-max" src="assets/img/item/brief-2.png" alt="" data-sr="left">
+                  <img class="img-responsive float-l-sm-min m-x-auto-xs-max" src="assets/img/michangarroimac.png" alt="" data-sr="left">
                 </div>
               </div>
               <div class="col-sm-6">
                 <div class="col-inner">
                   <div class="section-heading">
                     
-                    <h2>App Brief Section #2</h2>
+                    <h2>Estadísticas</h2>
                   </div> <!-- .section-heading -->
                   <div class="section-content">
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam in scelerisque nisi, a convallis nibh. Etiam posuere faucibus lectus, quis volutpat urna consequat et. Aenean rutrum dui in turpis feugiat, at facilisis dui laoreet.</p>
                     <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores.</p>
-                    <a class="btn btn-success m-y-5" href="#brief_3">Learn More</a>
+                    <a class="btn btn-success m-y-5" href="#brief_3">Aprende más</a>
                     <a class="btn btn-pink m-y-5" href="#brief_3">Abrir mi cuenta</a>
                   </div> <!-- .section-content -->
                 </div>
@@ -201,7 +201,7 @@
           </div>
         </div> <!-- #brief_2 -->
 
-        <div id="brief_3" class="section block-success align-c-xs-max">
+        <div id="brief_3" class="section block-default align-c-xs-max">
           <div class="container">
             <div class="row row-table">
               <div class="col-sm-6">
@@ -311,7 +311,7 @@
           </div>
         </div> <!-- #download -->
 
-        <div id="download" class="section block-primary align-c">
+        <div id="download" class="section block-invert align-c">
           <div class="container">
             <div class="row">
               <div class="col-xs-12">

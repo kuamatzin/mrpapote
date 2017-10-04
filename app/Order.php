@@ -117,8 +117,10 @@ class Order extends Model
      */
     public function emptyOrder()
     {
-        $this->creations()->delete();
-        $this->creations()->detach();
+        if (sizeof($this->creations)) {
+            $this->creations()->detach();
+            $this->creations()->delete();
+        }
         $this->products()->detach();
     }
 

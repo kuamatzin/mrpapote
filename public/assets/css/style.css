@@ -1,3 +1,4 @@
+
 /*!
  * Template Name: Flat Tech - Flat Landing Page Template
  * Author: bonefishcode
@@ -4669,7 +4670,7 @@
 }
 
 .block-invert {
-  background-color: #212121;
+  background-color: #9F64D5;
   color: white;
 }
 
@@ -6434,7 +6435,7 @@ form._default textarea {
     height: 4px;
     -webkit-border-radius: 50px;
             border-radius: 50px;
-    background-color: #1080f2;
+    background-color: #9F64D5;
   }
 }
 
@@ -6466,7 +6467,7 @@ form._default textarea {
 }
 
 .is-scroll .site-header {
-  background-color: #212121;
+  background-color: #9F64D5;
 }
 
 @media (max-width: 1199px) {
@@ -6674,6 +6675,10 @@ form._default textarea {
   position: absolute;
   z-index: 0;
   overflow: hidden;
+}
+
+.site-bg-overlay {
+  background-color: #9F64D5;
 }
 
 .site-bg-img,
