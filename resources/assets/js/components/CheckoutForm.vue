@@ -17,7 +17,7 @@
             this.stripe = StripeCheckout.configure({
               key: App.stripeKey,
               image: '/img/logo.png',
-              locale: 'auto',
+              locale: 'es',
               token: token => {
                 this.stripeToken = token.id
                 this.stripeEmail = token.email
@@ -46,7 +46,7 @@
                 })
             },
             subscribe(){
-                axios.post('subscribe/monhtly', {stripeToken: this.stripeToken, stripeEmail: this.stripeEmail }).then(({data}) => console.log(data))
+                axios.post('subscribe/gold', {stripeToken: this.stripeToken, stripeEmail: this.stripeEmail }).then(({data}) => console.log(data))
             }
         }
     }

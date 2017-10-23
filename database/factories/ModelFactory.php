@@ -64,7 +64,8 @@ $factory->define(App\Expense::class, function (Faker\Generator $faker) {
         'user_id' => function () {
             return factory('App\User')->create()->id;
         },
-        'description' => $faker->paragraph,
+        'description' => $faker->name,
+        'total' => random_int(300, 1000)
     ];
 });
 
@@ -75,8 +76,8 @@ $factory->define(App\Order::class, function (Faker\Generator $faker) {
         },
         'name' => $faker->name,
         'total' => random_int(30, 300),
-        'delivered' => true,
-        'payed' => true,
+        'delivered' => false,
+        'payed' => false,
         'created_at' => Carbon::today()
     ];
 });

@@ -37,6 +37,8 @@ class Expense extends Model
      */
     public function scopeGetByMonth($query, $month)
     {
-        return $query->whereMonth('buy_date', '=', $month);
+        return $query->whereMonth('buy_date', $month);
     }
+
+
 }

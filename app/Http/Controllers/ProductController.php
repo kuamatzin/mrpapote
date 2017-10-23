@@ -36,7 +36,7 @@ class ProductController extends Controller
     {
         $this->authorize('view', $subcategory);
 
-        return Product::where('subcategory_id', $subcategory->id)->with('subcategory.category')->with('ingredients')->get();
+        return Product::getBySubcategory($subcategory)->get();
     }
 
     /**

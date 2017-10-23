@@ -7,7 +7,7 @@
     "require": {
         "php": ">=5.6.4",
         "albertcht/invisible-recaptcha": "^1.7",
-        "consoletvs/charts": "5.*",
+        "maatwebsite/excel": "~2.1.0",
         "laravel/cashier": "~7.0",
         "laravel/framework": "5.4.*",
         "laravel/socialite": "^3.0",

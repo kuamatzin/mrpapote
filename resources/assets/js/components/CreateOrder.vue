@@ -132,6 +132,7 @@
     import Category from '../helpers/Category'
     import Subcategory from '../helpers/Subcategory'
     import Product from '../helpers/Product'
+    import Order from '../helpers/Order'
 
     export default {
         components: { PersonalizeProduct },
@@ -150,6 +151,7 @@
                 category_api: new Category(),
                 subcategory_api: new Subcategory(),
                 product_api: new Product(),
+                order_api: new Order(),
                 name: '',
                 categories: '',
                 subcategories: '',

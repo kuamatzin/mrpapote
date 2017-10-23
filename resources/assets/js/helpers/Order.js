@@ -12,7 +12,7 @@ export default class Order {
         }
 
         update(order_id, data){
-                return axios.put('/orders/' + order_id, data).
+                return axios.put('/orders/' + order_id, data)
         }
 
 }

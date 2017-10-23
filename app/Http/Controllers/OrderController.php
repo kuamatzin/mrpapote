@@ -42,6 +42,10 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'order_products.*.id' => 'required'
+        ]);
+
         $products = $request->order_products;
         $order = Order::create(['name' => $request->name, 'total' => $request->total, 'user_id' => Auth::id()]);
         $order->relateOrderProducts($products);
@@ -60,6 +64,10 @@ class OrderController extends Controller
     {
         $this->authorize($order);
 
+        $this->validate($request, [
+            'order_products.*.id' => 'required'
+        ]);
+
         $products = $request->order_products;
         $order->update(['name' => $request->name, 'total' => $request->total]);
         $order->relateOrderProducts($products, true);
@@ -69,20 +77,55 @@ class OrderController extends Controller
         ], 200);
     }
 
+    /**
+     * Update if the order has been payed
+     * @param  Order   $order   
+     * @param  Request $request 
+     * @return
+     */
     public function updatePayed(Order $order, Request $request)
     {
+        $this->authorize('update', $order);
+
         $order->payed = !$request->payed;
         $order->save();
+
+        return response()->json([
+            'message' => 'Updated'
+        ], 200);
     }
 
+    /**
+     * Update if the order has been delivered
+     * @param  Order   $order   
+     * @param  Request $request 
+     * @return            
+     */
     public function updateDelivered(Order $order, Request $request)
     {
+        $this->authorize('update', $order);
+
         $order->delivered = !$request->delivered;
         $order->save();
+
+        return response()->json([
+            'message' => 'Updated'
+        ], 200);
     }
 
+    /**
+     * Delete a order
+     * @param  Order  $order 
+     * @return         
+     */
     public function destroy(Order $order)
     {
+        $this->authorize($order);
+
         $order->completeDelete();
+
+        return response()->json([
+            'message' => 'Deleted'
+        ], 200);
     }
 }

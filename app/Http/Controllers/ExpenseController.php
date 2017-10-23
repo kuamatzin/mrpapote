@@ -23,7 +23,8 @@ class ExpenseController extends Controller
     public function get()
     {
         $month = Input::get('month');
-        return Auth::user()->expenses()->whereMonth('buy_date', $month)->orderBy('buy_date', 'desc')->get();
+
+        return Auth::user()->expenses()->getByMonth($month)->orderBy('buy_date', 'desc')->get();
     }
 
     public function store(Request $request)
@@ -76,7 +77,7 @@ class ExpenseController extends Controller
 
     private function deleteImage($expense, $request)
     {
-        unlink(storage_path() . '/app/public/' .$expense->file);
+        unlink(storage_path() . '/app/public/' . $expense->file);
         return $this->storeImage($request);
     }
 

@@ -5,6 +5,7 @@ namespace App\Services;
 use App\SocialAccount;
 use App\User;
 use Laravel\Socialite\Contracts\User as ProviderUser;
+use App\Notifications\WelcomeUser;
 
 class SocialAccountService
 {
@@ -19,6 +20,8 @@ class SocialAccountService
                 'email' => $providerUser->getEmail(),
                 'name' => $providerUser->getName(),
             ]);
+
+            $user->notify(new WelcomeUser($user->name));
 
             return $this->associateUsertoAccount($account, $user);
     }

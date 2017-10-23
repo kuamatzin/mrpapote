@@ -6,13 +6,15 @@ use App\Category;
 use App\Ingredient;
 use App\Order;
 use App\SocialAccount;
+use App\Subscription;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Cashier\Billable;
 
 class User extends Authenticatable
 {
-    use Notifiable, Billable;
+    use Billable;
+    use Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -88,7 +90,10 @@ class User extends Authenticatable
         return $query->whereEmail($email);
     }
 
-
+    /**
+     * Get all the products associated with the user account
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
     public function products()
     {
         return Product::join('subcategories', 'products.subcategory_id', '=', 'subcategories.id')
@@ -97,8 +102,23 @@ class User extends Authenticatable
                 ->select('products.*');
     }
 
+
+    /**
+     * Get the subcategories associated with the user account
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
     public function subcategories()
     {
         return $this->hasManyThrough(Subcategory::class, Category::class);
+    }
+
+
+    /**
+     * Determine if the user has an active subscription
+     * @return boolean 
+     */
+    public function hasAnActiveSubscription()
+    {
+        return $this->subscribed('gold') || $this->subscribed('silver');
     }
 }

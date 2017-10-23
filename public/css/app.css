@@ -14779,3 +14779,65 @@ a.file:not(.button) {
   padding: 30px;
 }
 
+.pricing-table {
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  border-radius: 4px !important;
+}
+
+.pricing-table-header {
+  position: relative !important;
+  padding: 30px 20px !important;
+}
+
+.block-invert {
+  background-color: #9F64D5 !important;
+  color: white !important;
+}
+
+.block-light-2 {
+  background-color: #f4f5f9 !important;
+  color: #313131 !important;
+}
+
+.pricing-table-caption {
+  font-family: Merriweather, "Times New Roman", Times, serif !important;
+  font-style: italic !important;
+  font-weight: 700 !important;
+  letter-spacing: 1px !important;
+  margin-bottom: 5px !important;
+}
+
+.pricing-table-title {
+  font-size: 32px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  margin-bottom: 0 !important;
+  color: white !important;
+}
+
+.pricing-table-content {
+  background-color: #fff !important;
+}
+
+.pricing-table-list {
+  list-style: none !important;
+  padding-left: 0 !important;
+  margin-top: 0px !important;
+}
+
+.pricing-table-list li {
+  padding: 15px 20px !important;
+  font-weight: 600 !important;
+}
+
+.pricing-table-list li i {
+  margin-right: .5em !important;
+  color: #10cfbd !important;
+}
+
+.pricing-table-footer {
+  background-color: #fff !important;
+  border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
+  padding: 20px !important;
+}
+

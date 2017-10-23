@@ -26,8 +26,10 @@
 </template>
 
 <script>
+    import sweetalert from 'sweetalert'
     import moment from 'moment'
     moment.locale('es');
+
     export default {
         props: ['order', 'index'],
 
@@ -63,7 +65,18 @@
                 this.$emit('updateOrder', this.order)
             },
             deleteOrder(){
-                axios.delete('/orders/' + this.order.id).then(data => this.$emit('orderDeleted', this.indx))
+                swal({
+                  title: "¿Estás seguro?",
+                  text: "No podrás recuperar los datos de la orden",
+                  type: "warning",
+                  showCancelButton: true,
+                  confirmButtonColor: "#DD6B55",
+                  cancelButtonText: 'Cancelar',
+                  confirmButtonText: "Estoy seguro",
+                  closeOnConfirm: true
+                },
+                () => axios.delete('/orders/' + this.order.id).then(data => this.$emit('orderDeleted', this.indx))
+                )
             }
         }
 

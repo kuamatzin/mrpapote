@@ -74,6 +74,17 @@ class Product extends Model
     {
         return Orderable::whereIn('order_id', Order::getByMonth($month)->pluck('id'))->where('orderable_type', 'App\Product')->where('orderable_id', $this->id);
     }
+
+    /**
+     * Get all subcategory products
+     * @param  $query       
+     * @param  App\Subcategory $subcategory 
+     * @return
+     */
+    public function scopeGetBySubcategory($query, $subcategory)
+    {
+        return $query->where('subcategory_id', $subcategory->id)->with('subcategory.category')->with('ingredients');
+    }
 }
 
 

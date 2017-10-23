@@ -64,6 +64,8 @@ class OrderTest extends TestCase
         $subcategory = factory('App\Subcategory')->create();
         $user = $subcategory->category->user;
 
+        $second_user = factory('App\User')->create();
+
         $order_products = factory('App\Product', 5)->create(['subcategory_id' => $subcategory->id])->each(function($product){
             $product['quantity'] = random_int(1, 4);
         })->toArray();
@@ -71,7 +73,7 @@ class OrderTest extends TestCase
         $data = factory('App\Order')->make()->toArray();
         unset($data['user_id']);
         $data['order_products'] = $order_products;
-        
+
         $response = $this->actingAs($user)->json('POST', '/orders', $data);
 
         $this->assertCount(5, $user->orders[0]->order_products());
@@ -84,6 +86,10 @@ class OrderTest extends TestCase
         $updated_data['total'] = $user->orders[0]->total;
         $updated_data['order_products'] = $update_order_products;
 
+        $response = $this->actingAs($second_user)->json('PUT', '/orders/' . $user->orders[0]->id, $updated_data);
+        
+        $response->assertStatus(403);
+
         $response = $this->actingAs($user)->json('PUT', '/orders/' . $user->orders[0]->id, $updated_data);
 
         $response->assertStatus(200)->assertJson([
@@ -92,4 +98,52 @@ class OrderTest extends TestCase
 
         $this->assertCount(2, $user->orders[0]->fresh()->order_products());
     }
+
+
+    /** @test */
+    function users_who_own_a_order_can_update_the_delevered_attribute()
+    {
+        $order = factory('App\Order')->create();
+
+        $this->assertFalse($order->delivered);
+
+        $response = $this->actingAs($order->user)->json('PUT', '/orders/updateDelivered/' . $order->id, ['delivered' => false]);
+
+        $response->assertStatus(200)->assertJson([
+            'message' => 'Updated'
+        ]);
+
+        $this->assertEquals($order->fresh()->delivered, 1);        
+    }
+
+
+    /** @test */
+    function users_who_own_a_order_can_update_the_payed_attribute()
+    {
+        $order = factory('App\Order')->create();
+
+        $this->assertFalse($order->payed);
+
+        $response = $this->actingAs($order->user)->json('PUT', '/orders/updatePayed/' . $order->id, ['payed' => false]);
+
+        $response->assertStatus(200)->assertJson([
+            'message' => 'Updated'
+        ]);
+        
+        $this->assertEquals($order->fresh()->payed, 1); 
+    }
+
+    /** @test */
+    function users_who_own_a_order_can_delete_it()
+    {
+        $order = factory('App\Order')->create();
+
+        $response = $this->actingAs($order->user)->json('DELETE', '/orders/' . $order->id);
+
+        $response->assertStatus(200)->assertJson([
+            'message' => 'Deleted',
+        ]);
+    }
+
+
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Order;
 use App\Product;
+use App\Services\ExcelGenerator;
 use App\Subcategory;
 use Carbon\Carbon;
 use ConsoleTVs\Charts\Facades\Charts;
@@ -36,9 +37,6 @@ class StatsController extends Controller
 
     public function index()
     {
-        if (Auth::user()->subscribed('silver')) {
-            dd("HOLA");
-        }
         return view('stats.index');
     }
 
@@ -46,8 +44,11 @@ class StatsController extends Controller
     {
         $start_date = Input::get('start_date');
         $end_date = Input::get('end_date');
+        $export_excel = Input::get('export_excel');
 
-        return $this->buildArrayWithGeneralStats($start_date, $end_date);
+        $data = $this->buildArrayWithGeneralStats($start_date, $end_date);
+        
+        return $export_excel ? ExcelGenerator::create($data) : $data;
     }
 
     private function buildArrayWithGeneralStats($start_month, $end_month)

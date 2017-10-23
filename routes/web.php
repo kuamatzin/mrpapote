@@ -39,9 +39,26 @@ Route::get('/statistics/subcategory/{subcategory}', 'StatsController@getBySubcat
 Route::get('/statistics/subcategoryProducts/{subcategory}', 'StatsController@getBySubcategoryProducts');
 Route::get('/statistics/generalStats', 'StatsController@generalStats');
 
+Route::get('test', function(){
+    dd(Auth::user()->invoices());
+});
+
+Route::get('user/invoice/{invoice}', function (Request $request, $invoiceId) {
+    return $request->user()->downloadInvoice($invoiceId, [
+        'vendor'  => 'Mi Changarro',
+        'product' => 'Membresía',
+    ]);
+});
+
 
 //Subscribe
+Route::get('subscribe', 'SubscribeController@show');
 Route::post('subscribe/{plan}', 'SubscribeController@subscribe');
+Route::post('subscribe/swap/{plan}', 'SubscribeController@swapPlan');
+Route::post('updateCard', 'SubscribeController@updateCard');
+
+//Webhooks
+Route::post('stripe/webhook','\Laravel\Cashier\Http\Controllers\WebhookController@handleWebhook');
 
 //Social Login
 Route::get('/redirect', 'SocialAuthController@redirect');
