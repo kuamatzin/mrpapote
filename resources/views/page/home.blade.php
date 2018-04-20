@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Mi Changarro</title>
+  <meta name="google-site-verification" content="-OXRYs7Zlt6Gr-P_brFm43ZLazAt1wz_TTZ_gqBjtM8" />
   <meta name="description" content="">
   <meta name="keywords" content="">
   <meta name="author" content="">
