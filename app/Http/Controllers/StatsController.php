@@ -7,14 +7,12 @@ use App\Product;
 use App\Services\ExcelGenerator;
 use App\Subcategory;
 use Carbon\Carbon;
-use ConsoleTVs\Charts\Facades\Charts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 
 class StatsController extends Controller
 {
-
     private $months = [
         'Enero',
         'Febrero',
@@ -53,7 +51,7 @@ class StatsController extends Controller
 
     private function buildArrayWithGeneralStats($start_month, $end_month)
     {
-        for ($start_month; $start_month <= $end_month; $start_month ++){
+        for ($start_month; $start_month <= $end_month; $start_month ++) {
             $months[] = $this->months[$start_month - 1];
             $revenue[] = (int)Auth::user()->orders()->getByMonth($start_month)->sum('total');
             $expenses[] = Auth::user()->expenses()->getByMonth($start_month)->sum('total');
@@ -73,7 +71,7 @@ class StatsController extends Controller
 
     private function buildArrayWithProductStats($product, $start_month, $end_month)
     {
-        for ($start_month; $start_month <= $end_month; $start_month ++){
+        for ($start_month; $start_month <= $end_month; $start_month ++) {
             $months[] = $this->months[$start_month - 1];
             $orders[] = $num_orders = (int)$product->stats($start_month)->count();
             $revenue[] = $product->price * $num_orders;
@@ -92,7 +90,7 @@ class StatsController extends Controller
 
     private function buildArrayWithSubcategoryStats(Subcategory $subcategory, $start_month, $end_month)
     {
-        for ($start_month; $start_month <= $end_month; $start_month ++){
+        for ($start_month; $start_month <= $end_month; $start_month ++) {
             $months[] = $this->months[$start_month - 1];
             $subcategory_stats = $subcategory->stats($start_month);
             $orders[] = $subcategory_stats['orders'];
