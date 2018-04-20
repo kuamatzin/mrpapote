@@ -23,14 +23,13 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        dd("HOLA");
         return Auth::user()->categories;
     }
 
     /**
      * Store a new Category
-     * @param  Request $request 
-     * @return            
+     * @param  Request $request
+     * @return
      */
     public function store(Request $request)
     {
