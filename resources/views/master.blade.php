@@ -7,6 +7,7 @@
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>Mr. Papote</title>
+        <meta name="google-site-verification" content="-OXRYs7Zlt6Gr-P_brFm43ZLazAt1wz_TTZ_gqBjtM8" />
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <!-- Styles -->
@@ -34,8 +35,30 @@
                             <span class="icon"><i class="fa fa-user-circle-o"></i></span>
                             <span class="name">Admin</span>
                         </a>
-                        <a href="/expenses" class="item {{$active == 'expenses' ? 'active' : '' }}"><span class="icon"><i class="fa fa-money"></i></span><span class="name">Gastos</span></a>
-                        <a href="/statistics" class="item {{$active == 'stats' ? 'active' : '' }}"><span class="icon"><i class="fa fa-line-chart"></i></span><span class="name">Estadísticas</span></a>
+                        <a href="/expenses" class="item {{$active == 'expenses' ? 'active' : '' }}">
+                            <span class="icon"><i class="fa fa-money"></i></span>
+                            <span class="name">Gastos</span>
+                        </a>
+                        <a href="/statistics" class="item {{$active == 'stats' ? 'active' : '' }}">
+                            <span class="icon"><i class="fa fa-line-chart"></i></span>
+                            <span class="name">Estadísticas</span>
+                        </a>
+                        <a href="/account" class="item {{$active == 'account' ? 'active' : '' }}">
+                            <span class="icon"><i class="fa fa-user"></i></span>
+                            <span class="name">Cuenta</span>
+                        </a>
+                        <a href="/subscription" class="item {{$active == 'subscription' ? 'active' : '' }}">
+                            <span class="icon"><i class="fa-dot-circle-o"></i></span>
+                            <span class="name">Subscripción</span>
+                        </a>
+                        <a href="/invoices" class="item {{$active == 'subscription' ? 'active' : '' }}">
+                            <span class="icon"><i class="fa fa-file-text-o"></i></span>
+                            <span class="name">Comprobantes</span>
+                        </a>
+                        <a href="/card" class="item {{$active == 'card' ? 'active' : '' }}">
+                            <span class="icon"><i class="fa fa-credit-card"></i></span>
+                            <span class="name">Método de Pago</span>
+                        </a>
                     </div>
                 </div>
             </aside>

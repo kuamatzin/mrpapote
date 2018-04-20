@@ -40,7 +40,7 @@ Route::get('/statistics/subcategoryProducts/{subcategory}', 'StatsController@get
 Route::get('/statistics/generalStats', 'StatsController@generalStats');
 
 Route::get('test', function(){
-    dd(Auth::user()->invoices());
+    dd(Auth::user()->hasAnActiveSubscription());
 });
 
 Route::get('user/invoice/{invoice}', function (Request $request, $invoiceId) {
@@ -56,6 +56,7 @@ Route::get('subscribe', 'SubscribeController@show');
 Route::post('subscribe/{plan}', 'SubscribeController@subscribe');
 Route::post('subscribe/swap/{plan}', 'SubscribeController@swapPlan');
 Route::post('updateCard', 'SubscribeController@updateCard');
+Route::delete('subscription', 'SubscribeController@cancelSubscription');
 
 //Webhooks
 Route::post('stripe/webhook','\Laravel\Cashier\Http\Controllers\WebhookController@handleWebhook');

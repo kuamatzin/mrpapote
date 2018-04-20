@@ -67,19 +67,37 @@ class SubscriptionTest extends TestCase
     }
 
     /** @test */
-    function user_can_swap_from_silver_plan_to_gold_plan()
+    function user_can_upgrade_from_silver_plan_to_gold_plan()
     {
         $response = $this->actingAs($this->user)->json('POST', 'subscribe/silver', ['stripeToken' => $this->stripeToken->id, 'stripeEmail' => $this->stripeToken->email]);
 
         $this->assertTrue($this->user->fresh()->subscribed('silver'));
 
         $response = $this->actingAs($this->user->fresh())->json('POST', 'subscribe/swap/gold');
-
+        
         $response->assertStatus(200)->assertJson([
             'message' => 'Swaped Plan',
         ]);
 
         $this->assertTrue($this->user->fresh()->subscribed('gold'));
+        $this->assertFalse($this->user->fresh()->subscribed('silver'));
+    }
+
+    /** @test */
+    function user_can_downgrade_from_gold_plan_to_silver_plan()
+    {
+        $response = $this->actingAs($this->user)->json('POST', 'subscribe/gold', ['stripeToken' => $this->stripeToken->id, 'stripeEmail' => $this->stripeToken->email]);
+
+        $this->assertTrue($this->user->fresh()->subscribed('gold'));
+
+        $response = $this->actingAs($this->user->fresh())->json('POST', 'subscribe/swap/silver');
+
+        $response->assertStatus(200)->assertJson([
+            'message' => 'Swaped Plan',
+        ]);
+
+        $this->assertFalse($this->user->fresh()->subscribed('gold'));
+        $this->assertTrue($this->user->fresh()->subscribed('silver'));
     }
 
     /** @test */
@@ -90,6 +108,7 @@ class SubscriptionTest extends TestCase
         $response = $this->actingAs($this->user->fresh())->json('POST', 'subscribe/gold', ['stripeToken' => $this->stripeToken->id, 'stripeEmail' => $this->stripeToken->email]);
 
         $this->assertTrue($this->user->fresh()->subscribed('silver'));
+
         $response->assertStatus(405)->assertJson([
             'message' => 'Already subscribed to an active plan',
         ]);
@@ -101,8 +120,12 @@ class SubscriptionTest extends TestCase
     function a_user_can_cancel_the_subscription()
     {
         $response = $this->actingAs($this->user)->json('POST', 'subscribe/gold', ['stripeToken' => $this->stripeToken->id, 'stripeEmail' => $this->stripeToken->email]);
-
-        $this->user->fresh()->subscription('gold')->cancel();
+        
+        $response = $this->actingAs($this->user->fresh())->json('DELETE', 'subscription');
+        
+        $response->assertStatus(200)->assertJson([
+            'message' => 'Subscription Canceled',
+        ]);
 
         $this->assertTrue($this->user->fresh()->subscription('gold')->onGracePeriod());
     }
@@ -110,11 +133,11 @@ class SubscriptionTest extends TestCase
     /** @test */
     function user_who_cancel_their_account_can_resume_it()
     {
-        $response = $this->actingAs($this->user)->json('POST', 'subscribe/gold', ['stripeToken' => $this->stripeToken->id, 'stripeEmail' => $this->stripeToken->email]);
+        $this->actingAs($this->user)->json('POST', 'subscribe/gold', ['stripeToken' => $this->stripeToken->id, 'stripeEmail' => $this->stripeToken->email]);
 
-        $this->user->fresh()->subscription('gold')->cancel();
+        $this->actingAs($this->user->fresh())->json('DELETE', 'subscription');
 
-        $this->user->fresh()->subscription('gold')->resume();
+        $response = $this->actingAs($this->user->fresh())->json('POST', 'subscribe/gold');
 
         $this->assertTrue($this->user->fresh()->subscribed('gold'));
     }
@@ -124,6 +147,10 @@ class SubscriptionTest extends TestCase
     {
         $response = $this->actingAs($this->user)->json('POST', 'subscribe/gold', ['stripeToken' => $this->stripeToken->id, 'stripeEmail' => $this->stripeToken->email]);
 
+        $response->assertStatus(200)->assertJson([
+            'message' => 'Subscribed',
+        ]);
+        
         $this->user->fresh()->subscription('gold')->cancelNow();
 
         $response = $this->actingAs($this->user->fresh())->json('POST', 'subscribe/gold', ['stripeToken' => $this->stripeToken->id, 'stripeEmail' => $this->stripeToken->email]);
@@ -133,6 +160,50 @@ class SubscriptionTest extends TestCase
         ]);
 
         $this->assertTrue($this->user->fresh()->subscribed('gold'));
+    }
+
+    /** @test */
+    function users_who_canceled_their_gold_subscription_and_still_on_the_grace_period_can_resume_it()
+    {
+        $response = $this->actingAs($this->user)->json('POST', 'subscribe/gold', ['stripeToken' => $this->stripeToken->id, 'stripeEmail' => $this->stripeToken->email]);
+
+        $response->assertStatus(200)->assertJson([
+            'message' => 'Subscribed',
+        ]);
+        
+        $this->actingAs($this->user->fresh())->json('DELETE', 'subscription');
+
+        $response = $this->actingAs($this->user->fresh())->json('POST', 'subscribe/gold', ['stripeToken' => $this->stripeToken->id, 'stripeEmail' => $this->stripeToken->email]);
+
+        $response->assertStatus(200)->assertJson([
+            'message' => 'Resumend Subscription',
+        ]);
+
+        $this->assertTrue($this->user->fresh()->subscribed('gold'));
+    }
+
+
+    /** @test */
+    function users_who_canceled_their_gold_subscription_and_still_on_the_grace_period_can_subscribe_to_silver_plan()
+    {
+        $response = $this->actingAs($this->user)->json('POST', 'subscribe/gold', ['stripeToken' => $this->stripeToken->id, 'stripeEmail' => $this->stripeToken->email]);
+
+        $response->assertStatus(200)->assertJson([
+            'message' => 'Subscribed',
+        ]);
+        
+        $this->actingAs($this->user->fresh())->json('DELETE', 'subscription');
+
+        $this->assertTrue($this->user->fresh()->subscription('gold')->onGracePeriod());
+
+        $response = $this->actingAs($this->user->fresh())->json('POST', 'subscribe/silver', ['stripeToken' => $this->stripeToken->id, 'stripeEmail' => $this->stripeToken->email]);
+        
+        $response->assertStatus(200)->assertJson([
+            'message' => 'Resumend Subscription',
+        ]);
+
+        $this->assertTrue($this->user->fresh()->subscribed('silver'));
+        $this->assertFalse($this->user->fresh()->hasAGracePeriodPlan());
     }
 
     /** @test */

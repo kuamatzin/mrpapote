@@ -77962,7 +77962,7 @@ exports.default = {
             });
         },
         subscribe: function subscribe() {
-            axios.post('subscribe/gold', { stripeToken: this.stripeToken, stripeEmail: this.stripeEmail }).then(function (_ref) {
+            axios.post('subscribe/silver', { stripeToken: this.stripeToken, stripeEmail: this.stripeEmail }).then(function (_ref) {
                 var data = _ref.data;
                 return console.log(data);
             });

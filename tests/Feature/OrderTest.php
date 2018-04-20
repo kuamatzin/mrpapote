@@ -66,15 +66,7 @@ class OrderTest extends TestCase
 
         $second_user = factory('App\User')->create();
 
-        $order_products = factory('App\Product', 5)->create(['subcategory_id' => $subcategory->id])->each(function($product){
-            $product['quantity'] = random_int(1, 4);
-        })->toArray();
-
-        $data = factory('App\Order')->make()->toArray();
-        unset($data['user_id']);
-        $data['order_products'] = $order_products;
-
-        $response = $this->actingAs($user)->json('POST', '/orders', $data);
+        $order = $this->createOrderWithProducts($user, $subcategory, 5);
 
         $this->assertCount(5, $user->orders[0]->order_products());
         
@@ -143,6 +135,21 @@ class OrderTest extends TestCase
         $response->assertStatus(200)->assertJson([
             'message' => 'Deleted',
         ]);
+    }
+
+
+    public function createOrderWithProducts($user, $subcategory, $numberProducts = 1){
+        $order_products = factory('App\Product', $numberProducts)->create(['subcategory_id' => $subcategory->id])->each(function($product){
+            $product['quantity'] = random_int(1, 4);
+        })->toArray();
+
+        $data = factory('App\Order')->make()->toArray();
+        unset($data['user_id']);
+        $data['order_products'] = $order_products;
+
+        $response = $this->actingAs($user)->json('POST', '/orders', $data);
+
+        return $user->order[0];
     }
 
 

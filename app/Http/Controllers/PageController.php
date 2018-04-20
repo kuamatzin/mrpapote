@@ -30,8 +30,18 @@ class PageController extends Controller
         return view('page.orders');
     }
 
+    /**
+     * Admin view
+     * @return View
+     */
     public function admin()
     {
         return view('page.admin');
+    }
+
+
+    public function account()
+    {
+        return view('page.account');
     }
 }

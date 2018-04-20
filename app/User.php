@@ -8,8 +8,8 @@ use App\Order;
 use App\SocialAccount;
 use App\Subscription;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Services\Billable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Cashier\Billable;
 
 class User extends Authenticatable
 {
@@ -81,7 +81,7 @@ class User extends Authenticatable
 
     /**
      * Get the user if has the email provided
-     * @param  \Illuminate\Database\Eloquent\Builder $query 
+     * @param  \Illuminate\Database\Eloquent\Builder $query
      * @param  Int $email
      * @return  \Illuminate\Database\Eloquent\Builder
      */
@@ -110,15 +110,5 @@ class User extends Authenticatable
     public function subcategories()
     {
         return $this->hasManyThrough(Subcategory::class, Category::class);
-    }
-
-
-    /**
-     * Determine if the user has an active subscription
-     * @return boolean 
-     */
-    public function hasAnActiveSubscription()
-    {
-        return $this->subscribed('gold') || $this->subscribed('silver');
     }
 }

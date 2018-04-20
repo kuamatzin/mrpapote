@@ -46,7 +46,7 @@
                 })
             },
             subscribe(){
-                axios.post('subscribe/gold', {stripeToken: this.stripeToken, stripeEmail: this.stripeEmail }).then(({data}) => console.log(data))
+                axios.post('subscribe/silver', {stripeToken: this.stripeToken, stripeEmail: this.stripeEmail }).then(({data}) => console.log(data))
             }
         }
     }

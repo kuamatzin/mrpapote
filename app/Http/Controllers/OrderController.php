@@ -24,17 +24,16 @@ class OrderController extends Controller
     }
 
     /**
-     * Get order
+     * Get the order details, all the products and creations associated with the order
      * @param  Order  $order 
      * @return App\Order        
-     
+     */
+
     public function show(Order $order)
     {
         $products = $order->order_products();
         return compact('products');
     }
-
-    */
 
     /**
      * Store new Order

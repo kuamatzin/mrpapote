@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\User::class, 1)->create()->each(function ($user) {
+        factory(App\User::class, 3)->create()->each(function ($user) {
             $this->createIngredients($user);
 
             $categories = $this->createCategories($user);

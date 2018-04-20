@@ -23,6 +23,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
+        dd("HOLA");
         return Auth::user()->categories;
     }
 
